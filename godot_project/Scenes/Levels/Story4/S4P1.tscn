@@ -1,0 +1,104 @@
+[gd_scene load_steps=10 format=3 uid="uid://blxe30raq36n4"]
+
+[ext_resource type="Script" path="res://Scripts/StoryScript.gd" id="1_66c1a"]
+[ext_resource type="Texture2D" uid="uid://ch265xp226peu" path="res://Assets/images/Story Images/PaperBackground.png" id="2_fxnt1"]
+[ext_resource type="FontFile" uid="uid://bhoyhtv0f7cvv" path="res://Assets/Fonts/qagesta-font/Qagesta-LVK5D.otf" id="3_pttnq"]
+[ext_resource type="Texture2D" uid="uid://dgn23xnyitk5h" path="res://Assets/images/Story Images/Story4/recessimage.png" id="4_urkef"]
+[ext_resource type="PackedScene" uid="uid://u8ibfy4bbtis" path="res://Scenes/Buttons/base_button.tscn" id="5_s30at"]
+[ext_resource type="Texture2D" uid="uid://ch3xtxr4sn85w" path="res://Assets/Textures/Buttons/NextBTN.png" id="6_ob4w2"]
+[ext_resource type="Texture2D" uid="uid://cqicdxomg4pp5" path="res://Assets/Textures/Buttons/NextBTNPressed.png" id="7_iqsqd"]
+[ext_resource type="Texture2D" uid="uid://ca45oqfhygqes" path="res://Assets/Textures/Buttons/BackBTN.png" id="8_ke5qd"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qtuyx"]
+font = ExtResource("3_pttnq")
+font_size = 100
+font_color = Color(0, 0.647059, 0.137255, 1)
+outline_size = 3
+outline_color = Color(0.376471, 0.478431, 0.968627, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="S4P1" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_66c1a")
+
+[node name="PaperBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_fxnt1")
+
+[node name="PageText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -254.5
+offset_top = 28.0
+offset_right = 254.5
+offset_bottom = 231.0
+grow_horizontal = 2
+text = "Recess Time!!"
+label_settings = SubResource("LabelSettings_qtuyx")
+autowrap_mode = 3
+
+[node name="PageImage" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -269.0
+offset_top = -209.0
+offset_right = 269.0
+offset_bottom = 316.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_urkef")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Next" parent="." instance=ExtResource("5_s30at")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -116.0
+offset_top = -80.0
+offset_right = -6.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("6_ob4w2")
+texture_pressed = ExtResource("7_iqsqd")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Return" parent="." instance=ExtResource("5_s30at")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1175.0
+offset_top = -805.0
+offset_right = -1093.0
+offset_bottom = -723.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.971449, 1)
+texture_normal = ExtResource("8_ke5qd")
+ignore_texture_size = true
+stretch_mode = 4

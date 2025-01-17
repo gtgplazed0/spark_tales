@@ -1,0 +1,106 @@
+[gd_scene load_steps=9 format=3 uid="uid://pwqe3vmbryyv"]
+
+[ext_resource type="Script" path="res://Scripts/Screens/base_screens.gd" id="1_e2iw6"]
+[ext_resource type="Texture2D" uid="uid://g375ho0r4i6l" path="res://Assets/Textures/StoriesLogo.png" id="1_ekieb"]
+[ext_resource type="Texture2D" uid="uid://onbahx5hl1bh" path="res://Assets/Textures/Background.png" id="2_5j8qg"]
+[ext_resource type="PackedScene" uid="uid://u8ibfy4bbtis" path="res://Scenes/Buttons/base_button.tscn" id="2_sxd6n"]
+[ext_resource type="Texture2D" uid="uid://ca45oqfhygqes" path="res://Assets/Textures/Buttons/BackBTN.png" id="4_f7rf1"]
+[ext_resource type="PackedScene" uid="uid://dmehtiy5jp37l" path="res://Scenes/Buttons/level_button.tscn" id="5_0v8qo"]
+[ext_resource type="Theme" uid="uid://bgvc4mtenp67f" path="res://themes/Vertical_theme_scroll_cont.tres" id="5_2c7mx"]
+[ext_resource type="StyleBox" uid="uid://bsnogtsds43rf" path="res://themes/VertScrollBarTheme.tres" id="5_ba7qh"]
+
+[node name="StoriesScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e2iw6")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_5j8qg")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -318.0
+offset_top = 8.0
+offset_right = 318.0
+offset_bottom = 278.0
+grow_horizontal = 2
+texture = ExtResource("1_ekieb")
+expand_mode = 1
+
+[node name="BackButton" parent="." instance=ExtResource("2_sxd6n")]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 87.0
+offset_bottom = 87.0
+texture_normal = ExtResource("4_f7rf1")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(600, 200)
+layout_mode = 0
+offset_left = 257.0
+offset_top = 255.0
+offset_right = 932.0
+offset_bottom = 721.0
+theme = ExtResource("5_2c7mx")
+theme_override_styles/panel = ExtResource("5_ba7qh")
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer/VBoxContainer" groups=["grid"]]
+layout_mode = 2
+columns = 4
+
+[node name="StoryLevelButton1" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
+layout_mode = 2
+
+[node name="StoryLevelButton2" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
+layout_mode = 2
+
+[node name="StoryLevelButton3" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
+layout_mode = 2
+
+[node name="StoryLevelButton4" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
+layout_mode = 2
+
+[node name="StoryLevelButton5" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
+layout_mode = 2
+
+[node name="StoryLevelButton6" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
+layout_mode = 2
+
+[node name="StoryLevelButton7" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
+layout_mode = 2
+
+[node name="StoryLevelButton8" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
+layout_mode = 2
+
+[node name="StoryLevelButton9" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
+layout_mode = 2
+
+[node name="StoryLevelButton10" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
+layout_mode = 2
+
+[node name="StoryLevelButton11" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
+layout_mode = 2
+
+[node name="StoryLevelButton12" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
+layout_mode = 2

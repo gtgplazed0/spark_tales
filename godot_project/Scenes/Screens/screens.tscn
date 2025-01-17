@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://dk5hjpgh1mgkj"]
+
+[ext_resource type="Script" path="res://Scripts/Screens/screens.gd" id="1_oeuaq"]
+[ext_resource type="PackedScene" uid="uid://btm8r6c0wrajy" path="res://Scenes/Screens/parent_login_screen.tscn" id="2_aysa1"]
+[ext_resource type="PackedScene" uid="uid://cn7megd1d1rew" path="res://Scenes/Screens/title_scene.tscn" id="2_p8ijn"]
+[ext_resource type="PackedScene" uid="uid://h335he0frfgh" path="res://Scenes/Levels/level_controller.tscn" id="2_qq5if"]
+[ext_resource type="PackedScene" uid="uid://pwqe3vmbryyv" path="res://Scenes/Screens/stories_screen.tscn" id="3_e8l5k"]
+[ext_resource type="PackedScene" uid="uid://bbqvyyfi5ti6i" path="res://Scenes/Screens/settings.tscn" id="6_ceklq"]
+
+[node name="Screens" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oeuaq")
+
+[node name="LevelController" parent="." instance=ExtResource("2_qq5if")]
+visible = false
+layout_mode = 1
+
+[node name="TitleScene" parent="." instance=ExtResource("2_p8ijn")]
+layout_mode = 1
+
+[node name="StoriesScreen" parent="." instance=ExtResource("3_e8l5k")]
+visible = false
+layout_mode = 1
+
+[node name="LevelParent" type="Node" parent="."]
+
+[node name="ParentLoginScreen" parent="." instance=ExtResource("2_aysa1")]
+visible = false
+layout_mode = 1
+
+[node name="SettingsScreen" parent="." instance=ExtResource("6_ceklq")]
+layout_mode = 1

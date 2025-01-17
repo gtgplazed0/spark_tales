@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://c6854i3bqfr33"]
+
+[ext_resource type="Texture2D" uid="uid://bnvc3ojuckkpb" path="res://Assets/Textures/Buttons/Settings/VolumeSliderGrabber.png" id="1_jtgif"]
+[ext_resource type="Script" path="res://Scripts/audio_slider.gd" id="2_6wbib"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_dc6h8"]
+color = Color(0.239216, 0.239216, 0.239216, 1)
+thickness = 8
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_et3qh"]
+color = Color(0.0431373, 0.278431, 1, 1)
+thickness = 8
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_4elwh"]
+color = Color(0.0431373, 0.278431, 1, 1)
+thickness = 8
+
+[node name="AudioSlider" type="HSlider"]
+offset_right = 8.0
+offset_bottom = 16.0
+theme_override_icons/grabber = ExtResource("1_jtgif")
+theme_override_icons/grabber_highlight = ExtResource("1_jtgif")
+theme_override_icons/grabber_disabled = ExtResource("1_jtgif")
+theme_override_styles/slider = SubResource("StyleBoxLine_dc6h8")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_et3qh")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_4elwh")
+script = ExtResource("2_6wbib")

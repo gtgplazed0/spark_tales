@@ -1,0 +1,121 @@
+[gd_scene load_steps=12 format=3 uid="uid://dvtk45r6uucwl"]
+
+[ext_resource type="Script" path="res://Scripts/StoryScript.gd" id="1_vmpf5"]
+[ext_resource type="Texture2D" uid="uid://ch265xp226peu" path="res://Assets/images/Story Images/PaperBackground.png" id="2_howwk"]
+[ext_resource type="Texture2D" uid="uid://bqamfhx44mjj" path="res://Assets/images/Story Images/Story4/girl_standing_next_to_teacher.jpg" id="3_n18on"]
+[ext_resource type="FontFile" uid="uid://bhoyhtv0f7cvv" path="res://Assets/Fonts/qagesta-font/Qagesta-LVK5D.otf" id="4_0yrw6"]
+[ext_resource type="PackedScene" uid="uid://u8ibfy4bbtis" path="res://Scenes/Buttons/base_button.tscn" id="5_okynr"]
+[ext_resource type="Texture2D" uid="uid://ch3xtxr4sn85w" path="res://Assets/Textures/Buttons/NextBTN.png" id="6_r7aya"]
+[ext_resource type="Texture2D" uid="uid://cqicdxomg4pp5" path="res://Assets/Textures/Buttons/NextBTNPressed.png" id="7_pqd6c"]
+[ext_resource type="Texture2D" uid="uid://gg4yydhgl7qn" path="res://Assets/Textures/Buttons/PreviousBTN.png" id="8_7op6n"]
+[ext_resource type="Texture2D" uid="uid://c1htx0pfe0p17" path="res://Assets/Textures/Buttons/PreviousBTNPressed.png" id="9_0xbfy"]
+[ext_resource type="Texture2D" uid="uid://ca45oqfhygqes" path="res://Assets/Textures/Buttons/BackBTN.png" id="10_xosgx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ilydg"]
+font = ExtResource("4_0yrw6")
+font_size = 45
+font_color = Color(0, 0, 0, 1)
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="S4P3" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vmpf5")
+
+[node name="PaperBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_howwk")
+
+[node name="PageImage" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -361.0
+offset_top = 8.0
+offset_right = 362.0
+offset_bottom = 361.0
+grow_horizontal = 2
+texture = ExtResource("3_n18on")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PageText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -557.5
+offset_top = -35.0
+offset_right = 555.5
+offset_bottom = 161.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Sandra is outside now! She has a teacher buddy who tells her to stay near her during recess! Should Sandra stay beside her teacher buddy at all times? "
+label_settings = SubResource("LabelSettings_ilydg")
+autowrap_mode = 3
+
+[node name="Next" parent="." instance=ExtResource("5_okynr")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -115.0
+offset_top = -80.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("6_r7aya")
+texture_pressed = ExtResource("7_pqd6c")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Previous" parent="." instance=ExtResource("5_okynr")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1172.0
+offset_top = -80.0
+offset_right = -1062.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("8_7op6n")
+texture_pressed = ExtResource("9_0xbfy")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Return" parent="." instance=ExtResource("5_okynr")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1175.0
+offset_top = -805.0
+offset_right = -1093.0
+offset_bottom = -723.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("10_xosgx")
+ignore_texture_size = true
+stretch_mode = 4

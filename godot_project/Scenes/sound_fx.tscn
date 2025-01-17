@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://o8sppryrp623"]
+
+[ext_resource type="Script" path="res://Scripts/SoundFX.gd" id="1_ui2mt"]
+[ext_resource type="AudioStream" uid="uid://cqfo0ppjuxx1m" path="res://Assets/Music/Song1.mp3" id="2_ayb8d"]
+[ext_resource type="AudioStream" uid="uid://djvy0k3m4dkrm" path="res://Assets/Music/Song2.mp3" id="3_3twk1"]
+[ext_resource type="AudioStream" uid="uid://i5na7sp1af83" path="res://Assets/Music/Song3.mp3" id="4_1k0qv"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pleqv"]
+streams_count = 3
+stream_0/stream = ExtResource("2_ayb8d")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("3_3twk1")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("4_1k0qv")
+stream_2/weight = 1.0
+
+[node name="SoundFX" type="Node"]
+script = ExtResource("1_ui2mt")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"SoundFX"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+bus = &"SoundFX"
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="."]
+bus = &"SoundFX"
+
+[node name="AudioStreamPlayer4" type="AudioStreamPlayer" parent="."]
+bus = &"SoundFX"
+
+[node name="AudioStreamPlayer5" type="AudioStreamPlayer" parent="."]
+bus = &"SoundFX"
+
+[node name="AudioStreamPlayer6" type="AudioStreamPlayer" parent="."]
+bus = &"SoundFX"
+
+[node name="AudioStreamPlayer7" type="AudioStreamPlayer" parent="."]
+bus = &"SoundFX"
+
+[node name="AudioStreamPlayer8" type="AudioStreamPlayer" parent="."]
+bus = &"SoundFX"
+
+[node name="AudioStreamPlayer9" type="AudioStreamPlayer" parent="."]
+bus = &"SoundFX"
+
+[node name="AudioStreamPlayer10" type="AudioStreamPlayer" parent="."]
+bus = &"SoundFX"
+
+[node name="AudioStreamPlayer11" type="AudioStreamPlayer" parent="."]
+bus = &"SoundFX"
+
+[node name="AudioStreamPlayer12" type="AudioStreamPlayer" parent="."]
+bus = &"SoundFX"
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_pleqv")
+autoplay = true
+bus = &"Music"

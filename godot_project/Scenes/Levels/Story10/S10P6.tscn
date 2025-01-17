@@ -1,0 +1,121 @@
+[gd_scene load_steps=12 format=3 uid="uid://bq67gxna5my4"]
+
+[ext_resource type="Script" path="res://Scripts/StoryScript.gd" id="1_da158"]
+[ext_resource type="Texture2D" uid="uid://ch265xp226peu" path="res://Assets/images/Story Images/PaperBackground.png" id="2_tvrc5"]
+[ext_resource type="Texture2D" uid="uid://ccpui2ul4s6ae" path="res://Assets/images/Story Images/Childreninclassroom.jpeg" id="3_yp2kh"]
+[ext_resource type="FontFile" uid="uid://bhoyhtv0f7cvv" path="res://Assets/Fonts/qagesta-font/Qagesta-LVK5D.otf" id="4_5tagj"]
+[ext_resource type="PackedScene" uid="uid://u8ibfy4bbtis" path="res://Scenes/Buttons/base_button.tscn" id="5_i46so"]
+[ext_resource type="Texture2D" uid="uid://gg4yydhgl7qn" path="res://Assets/Textures/Buttons/PreviousBTN.png" id="6_rm1ph"]
+[ext_resource type="Texture2D" uid="uid://c1htx0pfe0p17" path="res://Assets/Textures/Buttons/PreviousBTNPressed.png" id="7_yh5qf"]
+[ext_resource type="Texture2D" uid="uid://ca45oqfhygqes" path="res://Assets/Textures/Buttons/BackBTN.png" id="8_ceut2"]
+[ext_resource type="Texture2D" uid="uid://sfvewbneqxtl" path="res://Assets/Textures/Buttons/FinishStoryBTN.png" id="9_64vt5"]
+[ext_resource type="Texture2D" uid="uid://cbelugmlv6qmd" path="res://Assets/Textures/Buttons/FinishStoryPressed.png" id="10_e5jcf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ochtc"]
+font = ExtResource("4_5tagj")
+font_size = 45
+font_color = Color(0, 0, 0, 1)
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="S3P6" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_da158")
+
+[node name="PaperBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_tvrc5")
+
+[node name="PageImage" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -361.0
+offset_top = 16.0
+offset_right = 362.0
+offset_bottom = 368.0
+grow_horizontal = 2
+texture = ExtResource("3_yp2kh")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PageText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -557.5
+offset_top = -19.0
+offset_right = 555.5
+offset_bottom = 137.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "The children and Jimmy are inside with teacher. The fire drill is over, and everyone is safe and happy, because they followed their teachers instructions. Should you follow teacher in emergencys?"
+label_settings = SubResource("LabelSettings_ochtc")
+autowrap_mode = 3
+
+[node name="Previous" parent="." instance=ExtResource("5_i46so")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1172.0
+offset_top = -80.0
+offset_right = -1062.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("6_rm1ph")
+texture_pressed = ExtResource("7_yh5qf")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Return" parent="." instance=ExtResource("5_i46so")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1175.0
+offset_top = -805.0
+offset_right = -1093.0
+offset_bottom = -723.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("8_ceut2")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="FinishStory" parent="." instance=ExtResource("5_i46so")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -117.0
+offset_top = -80.0
+offset_right = -7.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("9_64vt5")
+texture_pressed = ExtResource("10_e5jcf")
+ignore_texture_size = true
+stretch_mode = 4

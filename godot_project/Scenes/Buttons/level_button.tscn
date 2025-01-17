@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://dmehtiy5jp37l"]
+
+[ext_resource type="Texture2D" uid="uid://dljupc1oeyq4h" path="res://Assets/Textures/Buttons/LevelSelectButtons/LevelButton.png" id="1_a6cpf"]
+[ext_resource type="Texture2D" uid="uid://b8gianbybbbb1" path="res://Assets/Textures/Buttons/LevelSelectButtons/LevelButtonPressed.png" id="2_uq2eq"]
+[ext_resource type="Texture2D" uid="uid://c0jgmcgave8rw" path="res://Assets/Textures/Buttons/LevelSelectButtons/DisabledButton.png" id="3_gcogj"]
+[ext_resource type="Script" path="res://Scripts/Buttons/level_button.gd" id="4_jm78s"]
+[ext_resource type="FontFile" uid="uid://cmbk48mxn2a6o" path="res://Assets/Fonts/bubble-garden-font/BubbleGardenBold-Yz7d4.ttf" id="5_h671v"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vr21i"]
+line_spacing = 2.08165e-12
+font = ExtResource("5_h671v")
+font_size = 80
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 22
+shadow_color = Color(0.109804, 0.239216, 0.109804, 1)
+
+[node name="LevelButton" type="TextureButton" groups=["level_button"]]
+custom_minimum_size = Vector2(150, 150)
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("1_a6cpf")
+texture_pressed = ExtResource("2_uq2eq")
+texture_disabled = ExtResource("3_gcogj")
+ignore_texture_size = true
+stretch_mode = 5
+script = ExtResource("4_jm78s")
+
+[node name="LevelName" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.0
+offset_top = -71.0
+offset_right = 45.0
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+label_settings = SubResource("LabelSettings_vr21i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

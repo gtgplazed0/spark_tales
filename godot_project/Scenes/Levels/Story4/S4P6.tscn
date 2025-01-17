@@ -1,0 +1,121 @@
+[gd_scene load_steps=12 format=3 uid="uid://cj624wxfidopi"]
+
+[ext_resource type="Script" path="res://Scripts/StoryScript.gd" id="1_nb62e"]
+[ext_resource type="Texture2D" uid="uid://ch265xp226peu" path="res://Assets/images/Story Images/PaperBackground.png" id="2_s7qtd"]
+[ext_resource type="Texture2D" uid="uid://8ctf0y5jojs5" path="res://Assets/images/Story Images/Story4/kids_in_classroom.png" id="3_ouxn6"]
+[ext_resource type="FontFile" uid="uid://bhoyhtv0f7cvv" path="res://Assets/Fonts/qagesta-font/Qagesta-LVK5D.otf" id="4_k4jpx"]
+[ext_resource type="PackedScene" uid="uid://u8ibfy4bbtis" path="res://Scenes/Buttons/base_button.tscn" id="5_ednaj"]
+[ext_resource type="Texture2D" uid="uid://gg4yydhgl7qn" path="res://Assets/Textures/Buttons/PreviousBTN.png" id="6_w3pru"]
+[ext_resource type="Texture2D" uid="uid://c1htx0pfe0p17" path="res://Assets/Textures/Buttons/PreviousBTNPressed.png" id="7_snf0f"]
+[ext_resource type="Texture2D" uid="uid://ca45oqfhygqes" path="res://Assets/Textures/Buttons/BackBTN.png" id="8_nlj4p"]
+[ext_resource type="Texture2D" uid="uid://sfvewbneqxtl" path="res://Assets/Textures/Buttons/FinishStoryBTN.png" id="9_4kmc3"]
+[ext_resource type="Texture2D" uid="uid://cbelugmlv6qmd" path="res://Assets/Textures/Buttons/FinishStoryPressed.png" id="10_0i2jj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ochtc"]
+font = ExtResource("4_k4jpx")
+font_size = 45
+font_color = Color(0, 0, 0, 1)
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="S4P6" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nb62e")
+
+[node name="PaperBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_s7qtd")
+
+[node name="PageImage" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -361.0
+offset_top = 16.0
+offset_right = 362.0
+offset_bottom = 368.0
+grow_horizontal = 2
+texture = ExtResource("3_ouxn6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PageText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -557.5
+offset_top = -19.0
+offset_right = 555.5
+offset_bottom = 137.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "The children are going inside now. Sandra is inside with all of her friends. She had so much fun at recess! Do you like recess like Sandra does?"
+label_settings = SubResource("LabelSettings_ochtc")
+autowrap_mode = 3
+
+[node name="Previous" parent="." instance=ExtResource("5_ednaj")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1172.0
+offset_top = -80.0
+offset_right = -1062.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("6_w3pru")
+texture_pressed = ExtResource("7_snf0f")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Return" parent="." instance=ExtResource("5_ednaj")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1175.0
+offset_top = -805.0
+offset_right = -1093.0
+offset_bottom = -723.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("8_nlj4p")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="FinishStory" parent="." instance=ExtResource("5_ednaj")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -117.0
+offset_top = -80.0
+offset_right = -7.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("9_4kmc3")
+texture_pressed = ExtResource("10_0i2jj")
+ignore_texture_size = true
+stretch_mode = 4

@@ -1,0 +1,508 @@
+[gd_scene load_steps=20 format=3 uid="uid://btm8r6c0wrajy"]
+
+[ext_resource type="LabelSettings" uid="uid://b8fgg5srn2g7h" path="res://themes/UserPassLabelTheme.tres" id="1_2ba7c"]
+[ext_resource type="Script" path="res://Scripts/Screens/login_screen.gd" id="1_tg2gy"]
+[ext_resource type="PackedScene" uid="uid://u8ibfy4bbtis" path="res://Scenes/Buttons/base_button.tscn" id="2_h2xp3"]
+[ext_resource type="Texture2D" uid="uid://ca45oqfhygqes" path="res://Assets/Textures/Buttons/BackBTN.png" id="3_4w2b8"]
+[ext_resource type="Texture2D" uid="uid://d3ct2tscpoxwl" path="res://Assets/Textures/Buttons/SignInButtons/SignInBTN.png" id="5_i010i"]
+[ext_resource type="Texture2D" uid="uid://b7kxl155cec1q" path="res://Assets/Textures/Buttons/SignInButtons/SignInBTNPressed.png" id="6_25xe4"]
+[ext_resource type="Texture2D" uid="uid://bvhgy43018h85" path="res://Assets/Textures/Buttons/SignInButtons/SignUpBTN.png" id="7_1cx3u"]
+[ext_resource type="Texture2D" uid="uid://bjdhscc6hsupp" path="res://Assets/Textures/Buttons/SignInButtons/SignUpBTNPressed.png" id="8_55ua8"]
+[ext_resource type="Texture2D" uid="uid://pp7ktwuryw4" path="res://Assets/Textures/Buttons/SignInButtons/LogOutBTN.png" id="9_4e6w3"]
+[ext_resource type="Texture2D" uid="uid://bt71lm6vtwndl" path="res://Assets/Textures/Buttons/SignInButtons/ExistingBTN.png" id="9_tkeaj"]
+[ext_resource type="Texture2D" uid="uid://blhhf1b0by6bj" path="res://Assets/Textures/Buttons/SignInButtons/ExistingBTNPressed.png" id="10_eskel"]
+[ext_resource type="Texture2D" uid="uid://dnqdja4rc1rar" path="res://Assets/Textures/Buttons/SignInButtons/NewAccountBTN.png" id="11_450cd"]
+[ext_resource type="Texture2D" uid="uid://mpakm72ilt83" path="res://Assets/Textures/Buttons/SignInButtons/NewAccountBTNPressed.png" id="12_ttu18"]
+[ext_resource type="Texture2D" uid="uid://dfo3xmlox1j3f" path="res://Assets/Textures/Buttons/SignInButtons/LogOutBTNPressed.png" id="14_127pq"]
+[ext_resource type="Texture2D" uid="uid://bobpgtt2461mg" path="res://Assets/Textures/Buttons/SignInButtons/EditButton.png" id="15_b1f0f"]
+[ext_resource type="Texture2D" uid="uid://mqyhkskrwidx" path="res://Assets/Textures/Buttons/SignInButtons/EditButtonPressed.png" id="16_ecry1"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kmpnh"]
+font_size = 100
+font_color = Color(0, 0, 0, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
+shadow_color = Color(0, 0.407843, 0, 0)
+shadow_offset = Vector2(100, 1100)
+
+[sub_resource type="LabelSettings" id="LabelSettings_sgxou"]
+font_size = 25
+font_color = Color(0.878431, 0, 0.156863, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_v53fl"]
+line_spacing = 2.0
+font_size = 60
+font_color = Color(0.192157, 0.192157, 0.192157, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="ParentLoginScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tg2gy")
+
+[node name="Login" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LoginBackground" type="ColorRect" parent="Login"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LoginTitleLabel" type="Label" parent="Login"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -330.0
+offset_right = 330.0
+offset_bottom = 140.0
+grow_horizontal = 2
+text = "Parents Login"
+label_settings = SubResource("LabelSettings_kmpnh")
+
+[node name="LoginUsernameLabel" type="Label" parent="Login"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 256.0
+offset_right = 272.0
+offset_bottom = 323.0
+text = "Username:"
+label_settings = ExtResource("1_2ba7c")
+
+[node name="LoginPasswordLabel" type="Label" parent="Login"]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 383.0
+offset_right = 256.0
+offset_bottom = 449.0
+text = "Password:
+"
+label_settings = ExtResource("1_2ba7c")
+
+[node name="LoginUsernameBg" type="ColorRect" parent="Login"]
+layout_mode = 0
+offset_left = 287.0
+offset_top = 262.0
+offset_right = 935.0
+offset_bottom = 328.0
+color = Color(0.443137, 0.443137, 0.443137, 1)
+
+[node name="LoginPasswordBg" type="ColorRect" parent="Login"]
+layout_mode = 0
+offset_left = 285.0
+offset_top = 384.0
+offset_right = 933.0
+offset_bottom = 450.0
+color = Color(0.443137, 0.443137, 0.443137, 1)
+
+[node name="LoginUsernameEdit" type="LineEdit" parent="Login"]
+layout_mode = 0
+offset_left = 287.0
+offset_top = 263.0
+offset_right = 933.0
+offset_bottom = 330.0
+theme_override_font_sizes/font_size = 35
+placeholder_text = "Enter Username Here"
+virtual_keyboard_type = 1
+clear_button_enabled = true
+select_all_on_focus = true
+caret_blink = true
+
+[node name="LoginPasswordEdit" type="LineEdit" parent="Login"]
+layout_mode = 0
+offset_left = 285.0
+offset_top = 385.0
+offset_right = 932.0
+offset_bottom = 449.0
+theme_override_font_sizes/font_size = 35
+placeholder_text = "Enter Password Here"
+max_length = 20
+secret = true
+secret_character = "*"
+virtual_keyboard_type = 6
+clear_button_enabled = true
+select_all_on_focus = true
+
+[node name="LSBackButton" parent="Login" instance=ExtResource("2_h2xp3")]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 87.0
+offset_bottom = 87.0
+texture_normal = ExtResource("3_4w2b8")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="LoginButton" type="TextureButton" parent="Login"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -166.5
+offset_top = -257.0
+offset_right = 166.5
+offset_bottom = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("5_i010i")
+texture_pressed = ExtResource("6_25xe4")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="LoginErrorMessage" type="Label" parent="Login"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -554.0
+offset_top = 61.0
+offset_right = 338.0
+offset_bottom = 119.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "
+"
+label_settings = SubResource("LabelSettings_sgxou")
+autowrap_mode = 3
+
+[node name="Signup" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SignupBackground" type="ColorRect" parent="Signup"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SignupTitleLabel" type="Label" parent="Signup"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -330.0
+offset_right = 330.0
+offset_bottom = 140.0
+grow_horizontal = 2
+text = "Parents Signup"
+label_settings = SubResource("LabelSettings_kmpnh")
+
+[node name="SignupUsernameLabel" type="Label" parent="Signup"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 173.0
+offset_right = 272.0
+offset_bottom = 240.0
+text = "Username:"
+label_settings = ExtResource("1_2ba7c")
+
+[node name="SignupPasswordLabel" type="Label" parent="Signup"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 293.0
+offset_right = 257.0
+offset_bottom = 359.0
+text = "Password:
+"
+label_settings = ExtResource("1_2ba7c")
+
+[node name="SignupRePasswordLabel" type="Label" parent="Signup"]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 368.0
+offset_right = 254.0
+offset_bottom = 500.0
+text = "Re-Enter
+Password:
+"
+label_settings = ExtResource("1_2ba7c")
+
+[node name="SignupUsernameBg" type="ColorRect" parent="Signup"]
+layout_mode = 0
+offset_left = 287.0
+offset_top = 179.0
+offset_right = 935.0
+offset_bottom = 245.0
+color = Color(0.443137, 0.443137, 0.443137, 1)
+
+[node name="SignupPasswordBg" type="ColorRect" parent="Signup"]
+layout_mode = 0
+offset_left = 286.0
+offset_top = 295.0
+offset_right = 934.0
+offset_bottom = 361.0
+color = Color(0.443137, 0.443137, 0.443137, 1)
+
+[node name="SignupRePasswordBg" type="ColorRect" parent="Signup"]
+layout_mode = 0
+offset_left = 284.0
+offset_top = 435.0
+offset_right = 932.0
+offset_bottom = 501.0
+color = Color(0.443137, 0.443137, 0.443137, 1)
+
+[node name="SignupUsernameEdit" type="LineEdit" parent="Signup"]
+layout_mode = 0
+offset_left = 287.0
+offset_top = 180.0
+offset_right = 933.0
+offset_bottom = 247.0
+theme_override_font_sizes/font_size = 35
+placeholder_text = "Enter Username Here"
+virtual_keyboard_type = 1
+clear_button_enabled = true
+select_all_on_focus = true
+caret_blink = true
+
+[node name="SignupPasswordEdit" type="LineEdit" parent="Signup"]
+layout_mode = 0
+offset_left = 286.0
+offset_top = 296.0
+offset_right = 933.0
+offset_bottom = 360.0
+theme_override_font_sizes/font_size = 35
+placeholder_text = "Enter Password Here"
+max_length = 20
+secret = true
+secret_character = "*"
+virtual_keyboard_type = 6
+clear_button_enabled = true
+select_all_on_focus = true
+
+[node name="SignupRePasswordEdit" type="LineEdit" parent="Signup"]
+layout_mode = 0
+offset_left = 283.0
+offset_top = 436.0
+offset_right = 930.0
+offset_bottom = 500.0
+theme_override_font_sizes/font_size = 35
+placeholder_text = "Enter Password Here"
+max_length = 20
+secret = true
+secret_character = "*"
+virtual_keyboard_type = 6
+clear_button_enabled = true
+select_all_on_focus = true
+
+[node name="LSBackButton" parent="Signup" instance=ExtResource("2_h2xp3")]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 87.0
+offset_bottom = 87.0
+texture_normal = ExtResource("3_4w2b8")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="SignupLoginButton" type="TextureButton" parent="Signup"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -228.0
+offset_right = 153.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("7_1cx3u")
+texture_pressed = ExtResource("8_55ua8")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="SignupErrorMessage" type="Label" parent="Signup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -556.0
+offset_top = 105.0
+offset_right = 335.0
+offset_bottom = 163.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "
+"
+label_settings = SubResource("LabelSettings_sgxou")
+autowrap_mode = 3
+
+[node name="LogOrSign" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="LogOrSign"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackButton" parent="LogOrSign" instance=ExtResource("2_h2xp3")]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 87.0
+offset_bottom = 87.0
+texture_normal = ExtResource("3_4w2b8")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="LogOrSign"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -381.0
+offset_top = 3.0
+offset_right = 387.0
+offset_bottom = 238.0
+grow_horizontal = 2
+text = "Create new account or log into exisiting account?"
+label_settings = SubResource("LabelSettings_v53fl")
+autowrap_mode = 2
+
+[node name="Existing" type="TextureButton" parent="LogOrSign"]
+layout_mode = 0
+offset_left = 704.0
+offset_top = 328.0
+offset_right = 1038.0
+offset_bottom = 558.0
+texture_normal = ExtResource("9_tkeaj")
+texture_pressed = ExtResource("10_eskel")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="NewAcc" type="TextureButton" parent="LogOrSign"]
+layout_mode = 0
+offset_left = 159.0
+offset_top = 326.0
+offset_right = 493.0
+offset_bottom = 556.0
+texture_normal = ExtResource("11_450cd")
+texture_pressed = ExtResource("12_ttu18")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="CurrentlySignedIn" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="CurrentlySignedIn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CurrentlySignedIn"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -372.0
+offset_top = 66.0
+offset_right = 372.0
+offset_bottom = 153.0
+grow_horizontal = 2
+text = "You're Already Signed in!"
+label_settings = SubResource("LabelSettings_v53fl")
+autowrap_mode = 2
+
+[node name="LogOutButton" type="TextureButton" parent="CurrentlySignedIn"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -193.0
+offset_right = 193.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("9_4e6w3")
+texture_pressed = ExtResource("14_127pq")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="BackButton" parent="CurrentlySignedIn" instance=ExtResource("2_h2xp3")]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 87.0
+offset_bottom = 87.0
+texture_normal = ExtResource("3_4w2b8")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="EditButton" type="TextureButton" parent="CurrentlySignedIn"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -193.0
+offset_top = 82.0
+offset_right = 192.0
+offset_bottom = 331.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("15_b1f0f")
+texture_pressed = ExtResource("16_ecry1")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="StopEditButton" type="TextureButton" parent="CurrentlySignedIn"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="pressed" from="Login/LoginButton" to="." method="_on_login_button_pressed"]
+[connection signal="pressed" from="Signup/SignupLoginButton" to="." method="_on_signup_login_button_pressed"]
+[connection signal="pressed" from="LogOrSign/Existing" to="." method="_on_existing_pressed"]
+[connection signal="pressed" from="LogOrSign/NewAcc" to="." method="_on_new_acc_pressed"]
+[connection signal="pressed" from="CurrentlySignedIn/LogOutButton" to="." method="_on_log_out_button_pressed"]
+[connection signal="pressed" from="CurrentlySignedIn/EditButton" to="." method="_on_edit_button_pressed"]

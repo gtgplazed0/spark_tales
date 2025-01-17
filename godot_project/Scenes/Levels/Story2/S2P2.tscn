@@ -1,0 +1,121 @@
+[gd_scene load_steps=12 format=3 uid="uid://bf3btmror0i42"]
+
+[ext_resource type="Script" path="res://Scripts/StoryScript.gd" id="1_k2gfc"]
+[ext_resource type="Texture2D" uid="uid://ch265xp226peu" path="res://Assets/images/Story Images/PaperBackground.png" id="2_2n1lx"]
+[ext_resource type="FontFile" uid="uid://bhoyhtv0f7cvv" path="res://Assets/Fonts/qagesta-font/Qagesta-LVK5D.otf" id="3_8akm3"]
+[ext_resource type="Texture2D" uid="uid://ceoiwj81lyin2" path="res://Assets/images/Story Images/NervousGirlAtDoctor.png" id="3_j37xw"]
+[ext_resource type="PackedScene" uid="uid://u8ibfy4bbtis" path="res://Scenes/Buttons/base_button.tscn" id="4_2b26l"]
+[ext_resource type="Texture2D" uid="uid://ch3xtxr4sn85w" path="res://Assets/Textures/Buttons/NextBTN.png" id="5_56i2e"]
+[ext_resource type="Texture2D" uid="uid://cqicdxomg4pp5" path="res://Assets/Textures/Buttons/NextBTNPressed.png" id="6_caenv"]
+[ext_resource type="Texture2D" uid="uid://gg4yydhgl7qn" path="res://Assets/Textures/Buttons/PreviousBTN.png" id="7_q7v7e"]
+[ext_resource type="Texture2D" uid="uid://c1htx0pfe0p17" path="res://Assets/Textures/Buttons/PreviousBTNPressed.png" id="8_3i15s"]
+[ext_resource type="Texture2D" uid="uid://ca45oqfhygqes" path="res://Assets/Textures/Buttons/BackBTN.png" id="9_4of7i"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_c2fy6"]
+font = ExtResource("3_8akm3")
+font_size = 45
+font_color = Color(0, 0, 0, 1)
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="S2P2" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k2gfc")
+
+[node name="PaperBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_2n1lx")
+
+[node name="PageImage" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -361.5
+offset_top = 16.0
+offset_right = 361.5
+offset_bottom = 382.0
+grow_horizontal = 2
+texture = ExtResource("3_j37xw")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PageText" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -557.5
+offset_top = -19.0
+offset_right = 555.5
+offset_bottom = 137.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Sara has to visit the doctor today! It is just a check up, but sara is feeling nervous. Should she be feeling nervous?"
+label_settings = SubResource("LabelSettings_c2fy6")
+autowrap_mode = 3
+
+[node name="Next" parent="." instance=ExtResource("4_2b26l")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -115.0
+offset_top = -80.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("5_56i2e")
+texture_pressed = ExtResource("6_caenv")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Previous" parent="." instance=ExtResource("4_2b26l")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1172.0
+offset_top = -80.0
+offset_right = -1062.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("7_q7v7e")
+texture_pressed = ExtResource("8_3i15s")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Return" parent="." instance=ExtResource("4_2b26l")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1175.0
+offset_top = -805.0
+offset_right = -1093.0
+offset_bottom = -723.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("9_4of7i")
+ignore_texture_size = true
+stretch_mode = 4
