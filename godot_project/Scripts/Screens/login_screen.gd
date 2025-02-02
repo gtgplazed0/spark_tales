@@ -100,7 +100,7 @@ func _on_login_button_pressed() -> void:
 		var sign_in_worked = await DataScript.login(temp_user, temp_pass)
 		if sign_in_worked == -1:
 			login_error_message.text = "Error. Log in did not work. Please try again"
-		elif sign_in_worked == -2:
+		elif sign_in_worked == -4:
 			login_error_message.text = "Invalid Username or Password. Please try again"
 		else:
 			new_logged_in.emit()

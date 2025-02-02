@@ -1,31 +1,35 @@
 extends Control
 class_name SelectionScreen
 signal level_button_clicked(button: String)
-@onready var vbox = null
-@onready var scroll_cont = null
+@onready var vbox = null # vertial box container in story screen
+@onready var scroll_bar = null # scroll bar
+var num_of_levels = 0
 func _ready():
 	if self.name == "StoriesScreen":
-		scroll_cont = $ScrollContainer
-		vbox = $ScrollContainer/VBoxContainer
-		register_buttons()
-		scroll_cont.get_v_scroll_bar().custom_minimum_size.x = 55
-	
+		set_up_stories()
+	print(num_of_levels)
 func register_buttons(): # used to register all of the screen buttons
 	var buttons = []
-	for first_child in vbox.get_children(): # linear search through all items
-		if first_child.is_in_group("grid"):
-			print(first_child)
-			for second_child in first_child.get_children():
-				if second_child.is_in_group("level_button"): # if the child is in the "level_button" group then add them to the array
-					buttons.append(second_child)
-	if buttons.size() > 0: # if there is a button in the buttons variable
-		for button in buttons: # runs through each button
-				button.clicked.connect(_on_button_pressed) # connect its "clicked" signal, to the on button pressed function
+	for child in vbox.get_children(): # linear search through all children in current node
+		if child.is_in_group("grid"):
+			for grand_child in child.get_children(): # linear search through all children of the current child iteration
+				if grand_child.is_in_group("level_button"): # if the child is in the "level_button" group  add them to the array
+					buttons.append(grand_child)
+					num_of_levels += 1
+	if buttons.size() > 0: # if theres button(s) in the buttons variable connect them to the button pressed function
+		for button in buttons:
+				button.clicked.connect(_on_button_pressed)
 
 func _on_button_pressed(button): # a function that runs when a screen button is pressed, connected to thier "clicked" signal
 	SoundFx.play("click")
-	level_button_clicked.emit(button.name) # emits a signal that includes the name of the button
+	level_button_clicked.emit(button.name) # emit the name of the button
 
 func reset_scroll():
-	scroll_cont.set_v_scroll(0)  # Reset vertical scroll to 0
+	scroll_bar.set_v_scroll(0)  # Reset vertical scroll to 0
+	
+func set_up_stories(): # set up te stories screen
+	scroll_bar = $ScrollContainer
+	vbox = $ScrollContainer/VBoxContainer
+	register_buttons()
+	scroll_bar.get_v_scroll_bar().custom_minimum_size.x = 55
 	

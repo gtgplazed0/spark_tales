@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/StoryScript.gd" id="1_8nrir"]
 [ext_resource type="Texture2D" uid="uid://ch265xp226peu" path="res://Assets/images/Story Images/PaperBackground.png" id="1_woity"]
-[ext_resource type="Texture2D" uid="uid://bovn5d8q0jlol" path="res://Assets/images/Story Images/teacherwavinggoodbye.png" id="3_m7eij"]
+[ext_resource type="Texture2D" uid="uid://bovn5d8q0jlol" path="res://Assets/images/Story Images/Story1/teacherwavinggoodbye.png" id="3_m7eij"]
 [ext_resource type="FontFile" uid="uid://bhoyhtv0f7cvv" path="res://Assets/Fonts/qagesta-font/Qagesta-LVK5D.otf" id="3_y5hhp"]
 [ext_resource type="PackedScene" uid="uid://u8ibfy4bbtis" path="res://Scenes/Buttons/base_button.tscn" id="4_kqd7g"]
 [ext_resource type="Texture2D" uid="uid://ch3xtxr4sn85w" path="res://Assets/Textures/Buttons/NextBTN.png" id="5_4ompb"]
@@ -105,17 +105,16 @@ stretch_mode = 4
 
 [node name="Return" parent="." instance=ExtResource("4_kqd7g")]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1175.0
-offset_top = -805.0
-offset_right = -1093.0
-offset_bottom = -723.0
+anchors_preset = -1
+anchor_left = 0.00423729
+anchor_top = 0.00617284
+anchor_right = 0.0737288
+anchor_bottom = 0.107407
+offset_right = -1.37091e-06
+offset_bottom = 1.16229e-06
 grow_horizontal = 0
 grow_vertical = 0
 texture_normal = ExtResource("10_wttsk")
 ignore_texture_size = true
 stretch_mode = 4
+metadata/_edit_use_anchors_ = true

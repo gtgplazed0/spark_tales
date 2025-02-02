@@ -7,7 +7,8 @@ class_name ScreenController
 @onready var level_controller = $LevelController
 @onready var parent_login_screen = $ParentLoginScreen
 @onready var settings_screen = $SettingsScreen
-
+@onready var progress_screen = $ProgressScreen
+@onready var sticker_pop_up = $StickerPopUpScreen
 # Variables
 var level_number = ""
 var current_screen = null
@@ -19,13 +20,14 @@ func _ready():
 func initialize_screens():
 	# Set all screens invisible except the title screen
 	for child in get_children():
-		if child is CanvasItem:
-			child.visible = child == title_screen
+		if child.name != "TitleScene" and child is Control:
+			child.visible = false
 	current_screen = title_screen
 	level_controller.return_signal.connect(_on_level_reset)
+	level_controller.finished_signal.connect(_on_level_finsihed)
 	parent_login_screen.new_logged_in.connect(_on_new_log_in)
 	parent_login_screen.start_editing.connect(_on_start_editing)
-
+	progress_screen.create_sticker_textures(stories_screen.num_of_levels)
 func register_buttons():
 	# Register buttons and connect their signals
 	for button in get_tree().get_nodes_in_group("buttons"):
@@ -47,6 +49,8 @@ func _on_button_pressed(button):
 			SoundFx.play("click")
 			change_screen(parent_login_screen)
 			parent_login_screen.ready_screens()
+		"ProgressButton":
+			progress_screen.visible = true
 		"BackButton":
 			TextToSpeech.speak_text("Spark Tales. Stories. Progress. Parents")
 			SoundFx.play("click")
@@ -69,6 +73,9 @@ func _on_button_pressed(button):
 			TextToSpeech.speak_text("Spark Tales. Stories. Progress. Parents")
 			SoundFx.play("click")
 			settings_screen.visible = false
+		"ProgressBackButton2":
+			TextToSpeech.speak_text("Spark Tales. Stories. Progress. Parents")
+			progress_screen.visible = false
 
 func change_screen(screen_to_change):
 	if current_screen:
@@ -100,4 +107,11 @@ func _on_new_log_in():
 
 func _on_start_editing():
 	change_screen(title_screen)
-	TextToSpeech.speak_text("Now in Editing Mode")
+func _on_level_finsihed():
+	var sticker = null
+	change_screen(stories_screen)
+	TextToSpeech.speak_text("Spark Tales. Stories. Progress. Parents")
+	sticker = progress_screen.new_sticker()
+	if sticker != null:
+		sticker_pop_up.create_popup(sticker)
+	

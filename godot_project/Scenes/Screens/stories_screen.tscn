@@ -52,11 +52,18 @@ stretch_mode = 0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 custom_minimum_size = Vector2(600, 200)
-layout_mode = 0
-offset_left = 257.0
-offset_top = 255.0
-offset_right = 932.0
-offset_bottom = 721.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -337.5
+offset_top = -141.0
+offset_right = 337.5
+offset_bottom = 325.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("5_2c7mx")
 theme_override_styles/panel = ExtResource("5_ba7qh")
 horizontal_scroll_mode = 0

@@ -2,6 +2,7 @@ extends Control
 var page = ""
 var level_type
 signal return_signal
+signal finished_signal
 var page_folder_path = "res://Scenes/Levels/"
 var story_name
 var level_to_call
@@ -29,6 +30,7 @@ func first_page(level_number):
 	
 func next_page():
 	var has_button = false
+	var has_finish_buttons = false
 	var find_match = page.rfind("P")
 	var find_name = story_name.rfind("P")
 	page[find_match+1] = str(int(page[find_match+1]) + 1)
@@ -41,10 +43,14 @@ func next_page():
 		for child in page_instance.get_children():
 			if child.is_in_group("buttons"):
 				has_button = true
-		if has_button == true:
+			if child.is_in_group("finish_buttons"):
+				has_finish_buttons = true
+		if has_button:
 			page_instance.next_clicked.connect(next_page)
 			page_instance.previous_clicked.connect(previous_page)
 			page_instance.return_clicked.connect(return_page)
+		if has_finish_buttons:
+			page_instance.finished_clicked.connect(finished_story)
 		
 func previous_page():
 	var has_button = false
@@ -83,3 +89,6 @@ func load_scene(file_path):
 	else:
 		print("Failed to load the scene at: " + file_path)
 		return null
+		
+func finished_story():
+	finished_signal.emit()

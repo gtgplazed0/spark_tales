@@ -34,8 +34,11 @@ gdscript/warnings/unused_variable=0
 
 window/size/viewport_width=1180
 window/size/viewport_height=810
-window/stretch/mode="canvas_items"
-window/stretch/scale_mode="integer"
+window/size/mode=3
+window/size/initial_position_type=0
+window/size/extend_to_title=true
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [filesystem]
 
@@ -55,5 +58,6 @@ pointing/emulate_touch_from_mouse=true
 
 [rendering]
 
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true

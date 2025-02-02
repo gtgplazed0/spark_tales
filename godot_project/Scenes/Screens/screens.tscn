@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dk5hjpgh1mgkj"]
+[gd_scene load_steps=9 format=3 uid="uid://dk5hjpgh1mgkj"]
 
 [ext_resource type="Script" path="res://Scripts/Screens/screens.gd" id="1_oeuaq"]
 [ext_resource type="PackedScene" uid="uid://btm8r6c0wrajy" path="res://Scenes/Screens/parent_login_screen.tscn" id="2_aysa1"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://h335he0frfgh" path="res://Scenes/Levels/level_controller.tscn" id="2_qq5if"]
 [ext_resource type="PackedScene" uid="uid://pwqe3vmbryyv" path="res://Scenes/Screens/stories_screen.tscn" id="3_e8l5k"]
 [ext_resource type="PackedScene" uid="uid://bbqvyyfi5ti6i" path="res://Scenes/Screens/settings.tscn" id="6_ceklq"]
+[ext_resource type="PackedScene" uid="uid://co4ny2g4lr41l" path="res://Scenes/Screens/progress_screen.tscn" id="7_n4ktr"]
+[ext_resource type="PackedScene" uid="uid://bs6og6jqb5me5" path="res://Scenes/Screens/sticker_pop_up_screen.tscn" id="8_ifjla"]
 
 [node name="Screens" type="Control"]
 layout_mode = 3
@@ -26,6 +28,7 @@ layout_mode = 1
 [node name="StoriesScreen" parent="." instance=ExtResource("3_e8l5k")]
 visible = false
 layout_mode = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="LevelParent" type="Node" parent="."]
 
@@ -34,4 +37,10 @@ visible = false
 layout_mode = 1
 
 [node name="SettingsScreen" parent="." instance=ExtResource("6_ceklq")]
+layout_mode = 1
+
+[node name="ProgressScreen" parent="." instance=ExtResource("7_n4ktr")]
+layout_mode = 1
+
+[node name="StickerPopUpScreen" parent="." instance=ExtResource("8_ifjla")]
 layout_mode = 1

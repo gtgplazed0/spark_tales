@@ -37,24 +37,24 @@ func _process(_delta: float) -> void:
 	
 func label_setup():
 	label_position_og = label.position
-	label_position_new = label_position_og + Vector2(15, 15)
+	label_position_new = label_position_og + Vector2(15, 15) # position to account for button pressed texture changing
 	label_name()
 	
 func _on_pressed():
 	clicked.emit(self) # On the button being pressed, the signal is emited with the name of the button as a parameter
 
 func _on_button_down() -> void:
-	label.position = label_position_new
+	label.position = label_position_new # changes number label position based on position of button
 	
 func _on_button_up() -> void:
 	if mouse_exit == false:
-		label.position = label_position_og
+		label.position = label_position_og # changes number label position based on position of button
 
 func _on_mouse_exited() -> void:
 	mouse_exit = true
-	label.position = label_position_og
+	label.position = label_position_og # changes number label position based on position of button
 
 func _on_mouse_entered() -> void:
 	mouse_exit = false
 	if self.button_pressed == true:
-		label.position = label_position_new
+		label.position = label_position_new # changes number label position based on position of button
