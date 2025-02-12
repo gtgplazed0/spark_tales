@@ -95,7 +95,7 @@ func page_setup():
 				file.close()
 				page_text.text = stored_text
 		else:
-			var text_and_image = await DataScript.get_page_modifications(4, "S1P1")
+			var text_and_image = await DataScript.get_page_modifications(user_id, name)
 			page_text.text = text_and_image["text"]
 	story_num = get_story_num()
 

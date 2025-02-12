@@ -215,6 +215,7 @@ app.get('/get-save', async (req, res) => {
 			return res.status(404).json({ error: "Page not found" });
 		}
     const image_url = rows[0].image_url
+    const extension = path.extname(image_url); // ".png"
     // Extract S3 file key from URL
 		const fileKey = image_url.split("/").pop();
 
@@ -224,8 +225,7 @@ app.get('/get-save', async (req, res) => {
 			Key: fileKey,
 			Expires: 300, // Link expires in 300 seconds (5 minutes)
 		});
-
-		res.json({ text_content: rows[0].text_content, image_url: signedUrl});
+		res.json({ text_content: rows[0].text_content, image_url: signedUrl, ext: extension});
   } catch (err){
     console.error("Error:", err);
 		res.status(500).json({ error: "Server error" });
