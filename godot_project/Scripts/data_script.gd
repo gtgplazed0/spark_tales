@@ -301,6 +301,7 @@ func send_page(user_id: int, page_name: String, text_content: String, image):
 	var image_bytes = image
 	form_data["image"] = image_bytes
 	var boundary = "----WebKitFormBoundary7MA4YWxkTrZu0gW"
+	var body = generate_multipart_data(form_data, boundary)
 	var headers = [
 		"Content-Type: multipart/form-data; boundary=" + boundary
 	]
