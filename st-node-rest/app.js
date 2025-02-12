@@ -214,6 +214,7 @@ app.get('/get-save', async (req, res) => {
 		if (rows.length === 0) {
 			return res.status(404).json({ error: "Page not found" });
 		}
+    const image_url = rows[0].image_url
     // Extract S3 file key from URL
 		const fileKey = image_url.split("/").pop();
 
@@ -226,8 +227,6 @@ app.get('/get-save', async (req, res) => {
 
 		// Return text content + signed image URL
 		res.json({ text_content: rows[0].text_content, image_url: signedUrl });
-		// Send response with text content and image URL
-		//res.json({ text_content: rows[0].text_content, image_url: rows[0].image_url });
   } catch (err){
     console.error("Error:", err);
 		res.status(500).json({ error: "Server error" });
