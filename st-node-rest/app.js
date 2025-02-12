@@ -181,7 +181,7 @@ app.post("/upload", upload.single("image"), async (req, res) => {
 			return res.status(400).json({ error: "Missing required fields" });
 		}
     if (!req.file) {
-      prconsole.logint("Missing required fields: image files")
+      console.log("Missing required fields: image files")
 			return res.status(400).json({ error: "Missing required fields" });
 		}
 
