@@ -3,7 +3,9 @@ extends Node
 var http_request : HTTPRequest
 var user_id = 1 # id of the current user, is set to one if user is a guest
 var text_and_image_from_save = null
+var texture
 var sign_up_worked = 1 #flag value checking sign up
+var got_image_extension
 # -1 = failed,  1 = worked,  -2 = user already exists,   -3 = user_id not found,  -4 = bad user or pass  
 const BASE_URL = "https://compsciia-production.up.railway.app/" # base of the API's url
 
@@ -332,16 +334,48 @@ func get_page_modifications(user_id:int, page_name:String):
 	http_request.request(url, headers, HTTPClient.METHOD_GET)
 	await http_request.request_completed
 	return text_and_image_from_save
+	
 func _on_get_page_modifications(result, response_code, headers, body):
 	if response_code == 200:
 			var json = JSON.parse_string(body.get_string_from_utf8())
 			if json:
 				# Set text content and url
 				var text = json["text_content"]
-				var image = json["image"]
-				var extension = json["ext"]
-				var image_to_send = image.image
-				text_and_image_from_save = {"text":text, "image":image, "extension":extension}
+				var image_url = json["image_url"]
+				got_image_extension = json["ext"]
+				await get_image(image_url)
+				var image = texture
+				text_and_image_from_save = {"text":text, "image":image}
 				print("text_and_image: " + str(text_and_image_from_save))
 	else:
 		print("Error fetching data, response code:", response_code)
+		
+		
+func get_image(image_url):
+	http_request = new_http("_on_get_image_request_completed")
+	var err = http_request.get(image_url)
+	if err != OK:
+		print("Error making request: ", err)
+	await http_request.request_completed
+	return texture
+	
+
+func _on_get_image_request_completed(result, response_code, headers, body):
+	if response_code == 200:
+		var err
+		# Success! The 'body' variable contains the image data.
+		# Option 1: Load the image directly into a Texture
+		var image = Image.new()
+		if got_image_extension == "png":
+			err = image.load_png_from_buffer(body) # Or load_jpg_from_buffer, etc.
+		elif got_image_extension == "jpeg" || got_image_extension == "jpg":
+			err = image.load_jpg_from_buffer(body) # Or load_jpg_from_buffer, etc.
+		if err == OK:
+			texture = ImageTexture.new()
+			texture = texture.create_from_image(image)
+		else:
+			print("Error loading image from buffer:", err)
+	else:
+		print("Request failed: ", response_code)
+		print("Headers: ", headers) # Print headers for debugging
+		print("Body: ", body)       # Print body for debugging
