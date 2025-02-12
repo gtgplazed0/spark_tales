@@ -21,6 +21,7 @@ const fs = require('fs');
 const path = require('path');
 
 const mysql = require("mysql2/promise");
+const { stringify } = require('querystring');
 
 const storage = multer.memoryStorage();  // Use memoryStorage to handle raw binary data in Buffer form
 
@@ -163,45 +164,24 @@ app.post('/login', async (req, res) => { //asynchronous HTTPS POST request to si
   }
 });
 
-//Adding page contents (works for text and url)
-app.post('/save_page', async (req, res) => {
-  const { user_id, page_name, text_content, image_url } = req.body;
-
-  if (!user_id || !page_name || !text_content || !image_url) {
-      return res.status(400).json({ error: "Missing required fields" });
-  }
-
-  try {
-      const sql = `
-          INSERT INTO page_modifications (user_id, page_name, text_content, image_url) 
-          VALUES (?, ?, ?, ?) 
-          ON DUPLICATE KEY UPDATE 
-              text_content = VALUES(text_content), 
-              image_url = VALUES(image_url);
-      `;
-
-      const params = [user_id, page_name, text_content, image_url];
-
-      const [result] = await db.execute(sql, params);
-
-      res.json({
-          success: true,
-          message: result.affectedRows > 1 ? "Page updated" : "Page created",
-      });
-  } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Database error" });
-  }
-});
-
-
-// adding page content test (trying to upload images to s3)
-
 // Endpoint to handle image upload
 app.post("/upload", upload.single("image"), async (req, res) => {
 	try {
 		const { user_id, page_name, text_content } = req.body;
-		if (!user_id || !page_name || !text_content || !req.file) {
+		if (!user_id) {
+      print("Missing required fields: User_id")
+			return res.status(400).json({ error: "Missing required fields" });
+		}
+    if (!page_name) {
+      print("Missing required fields: Page_name")
+			return res.status(400).json({ error: "Missing required fields" });
+		}
+    if (!text_content) {
+      print("Missing required fields: Text_content")
+			return res.status(400).json({ error: "Missing required fields" });
+		}
+    if (!req.file) {
+      print("Missing required fields: image files")
 			return res.status(400).json({ error: "Missing required fields" });
 		}
 
@@ -228,19 +208,12 @@ app.post("/upload", upload.single("image"), async (req, res) => {
 		await db.execute(sql, [user_id, page_name, text_content, imageUrl]);
 
 		// Response
-		res.json({
-			success: true,
-			message: "Page saved successfully",
-			imageUrl: imageUrl,
-		});
+		res.status(200).json({ success: true }); // success status message
 	} catch (err) {
 		console.error("Error:", err);
 		res.status(500).json({ error: "Server error" });
 	}
 });
-
-//done adding test code
-
 
 app.post('/add-story', upload.array('images', 10), async (req, res) => { // asynchronous HTTPS POST request to upload an array of images (in multiform data) and the story to a database and s3 file system
   const { user_id, title } = req.body; //get the user_id and title of the story from request body
