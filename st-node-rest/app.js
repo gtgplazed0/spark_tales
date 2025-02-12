@@ -183,7 +183,7 @@ app.post('/save_page', async (req, res) => {
 
   try {
       const sql = `
-          INSERT INTO pages (user_id, page_name, text_content, image_url) 
+          INSERT INTO page_modifications (user_id, page_name, text_content, image_url) 
           VALUES (?, ?, ?, ?) 
           ON DUPLICATE KEY UPDATE 
               text_content = VALUES(text_content), 
