@@ -2,6 +2,7 @@ extends Node
 # Declare the HTTPRequest variable
 var http_request : HTTPRequest
 var user_id = 1 # id of the current user, is set to one if user is a guest
+var text_and_image_from_save = null
 var sign_up_worked = 1 #flag value checking sign up
 # -1 = failed,  1 = worked,  -2 = user already exists,   -3 = user_id not found,  -4 = bad user or pass  
 const BASE_URL = "https://compsciia-production.up.railway.app/" # base of the API's url
@@ -323,3 +324,27 @@ func _on_send_page_request_completed(result, response_code, headers, body): # wh
 		print(str(body))
 	else: # error with request
 		print("Request Failed with response code: ", response_code)
+
+func get_page_modifications(user_id:int, page_name:String):
+	var url = BASE_URL + "get-save?user_id=" + str(user_id) + "&page_name=" +str(page_name)
+	http_request = new_http("_on_get_page_modifications")
+	var headers = ["Content-Type: application/json"]
+	http_request.request(url, headers, HTTPClient.METHOD_GET)
+	await http_request.request_completed
+	return text_and_image_from_save
+func _on_get_page_modifications(result, response_code, headers, body):
+	if response_code == 200:
+			var json = JSON.parse_string(body.get_string_from_utf8())
+			if json:
+				# Set text content and url
+				var text = json["text_content"]
+				var image = null
+				var image_texture = ImageTexture.new()
+				var new_image_objet = Image.new()
+				var error = new_image_objet.load_from_file(json["image_url"])
+				if error == OK:
+					image = image_texture.create_from_image(new_image_objet)
+				text_and_image_from_save = {"text":text, "image":image}
+				print("text_and_image: " + str(text_and_image_from_save))
+	else:
+		print("Error fetching data, response code:", response_code)

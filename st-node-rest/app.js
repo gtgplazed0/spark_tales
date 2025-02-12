@@ -214,8 +214,20 @@ app.get('/get-save', async (req, res) => {
 		if (rows.length === 0) {
 			return res.status(404).json({ error: "Page not found" });
 		}
+    // Extract S3 file key from URL
+		const fileKey = image_url.split("/").pop();
+
+		// Generate a signed URL (valid for 5 minutes)
+		const signedUrl = s3.getSignedUrl("getObject", {
+			Bucket: "spark-tales-s3-bucket",
+			Key: fileKey,
+			Expires: 300, // Link expires in 300 seconds (5 minutes)
+		});
+
+		// Return text content + signed image URL
+		res.json({ text_content: rows[0].text_content, image_url: signedUrl });
 		// Send response with text content and image URL
-		res.json({ text_content: rows[0].text_content, image_url: rows[0].image_url });
+		//res.json({ text_content: rows[0].text_content, image_url: rows[0].image_url });
   } catch (err){
     console.error("Error:", err);
 		res.status(500).json({ error: "Server error" });
