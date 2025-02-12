@@ -338,13 +338,10 @@ func _on_get_page_modifications(result, response_code, headers, body):
 			if json:
 				# Set text content and url
 				var text = json["text_content"]
-				var image = null
-				var image_texture = ImageTexture.new()
-				var new_image_objet = Image.new()
-				var error = new_image_objet.load_from_file(json["image_url"])
-				if error == OK:
-					image = image_texture.create_from_image(new_image_objet)
-				text_and_image_from_save = {"text":text, "image":image}
+				var image = json["image"]
+				var extension = json["ext"]
+				var image_to_send = image.image
+				text_and_image_from_save = {"text":text, "image":image, "extension":extension}
 				print("text_and_image: " + str(text_and_image_from_save))
 	else:
 		print("Error fetching data, response code:", response_code)
