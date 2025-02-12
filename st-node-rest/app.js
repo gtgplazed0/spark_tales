@@ -24,6 +24,17 @@ const mysql = require("mysql2/promise");
 
 const storage = multer.memoryStorage();  // Use memoryStorage to handle raw binary data in Buffer form
 
+
+// Configure AWS S3
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: "us-east-2",
+});
+
+// Usage
+uploadFile('test.jpeg', 'saturn2');
+
 const db = mysql.createPool({ //creating conenction to database using the mysql library and the credentials to my MySQL database
   //using environment variables that connect to my railway hosting platform to hide and encrypt sensitive data
   // using || when specifying port numbers to ensure error checking
@@ -38,28 +49,9 @@ const db = mysql.createPool({ //creating conenction to database using the mysql 
   
 });
 
-// Configure AWS S3
-const s3 = new AWS.S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION,
-});
-
-// Configure Multer for S3
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: process.env.AWS_BUCKET_NAME,
-    acl: "public-read", // Adjust as per your needs
-    key: (req, file, cb) => {
-      const uniqueKey = `stories/${Date.now()}_${file.originalname}`;
-      cb(null, uniqueKey);
-    },
-  }),
-});
+const upload = multer({ storage: multer.memoryStorage() });
 
 app.use(express.urlencoded({ extended: true }));
-
 console.log(process.env.DB_HOST)
 console.log(process.env.DB_NAME)
 console.log(process.env.DB_USER)
@@ -173,7 +165,7 @@ app.post('/login', async (req, res) => { //asynchronous HTTPS POST request to si
   }
 });
 
-//Adding page contents
+//Adding page contents (works for text and url)
 app.post('/save_page', async (req, res) => {
   const { user_id, page_name, text_content, image_url } = req.body;
 
@@ -205,13 +197,51 @@ app.post('/save_page', async (req, res) => {
 });
 
 
+// adding page content test (trying to upload images to s3)
 
+// Endpoint to handle image upload
+app.post("/upload", upload.single("image"), async (req, res) => {
+	try {
+		const { user_id, page_name, text_content } = req.body;
+		if (!user_id || !page_name || !text_content || !req.file) {
+			return res.status(400).json({ error: "Missing required fields" });
+		}
 
+		// Upload image to S3
+		const fileName = `${Date.now()}_${req.file.originalname}`;
+		const params = {
+			Bucket: "spark-tales-s3-bucket",
+			Key: fileName,
+			Body: req.file.buffer,
+			ContentType: req.file.mimetype,
+		};
 
+		const uploadResult = await s3.upload(params).promise();
+		const imageUrl = uploadResult.Location; // S3 File URL
 
+		// Save details to the database
+		const sql = `
+			INSERT INTO pages (user_id, page_name, text_content, image_url) 
+			VALUES (?, ?, ?, ?) 
+			ON DUPLICATE KEY UPDATE 
+				text_content = VALUES(text_content), 
+				image_url = VALUES(image_url);
+		`;
+		await db.execute(sql, [user_id, page_name, text_content, imageUrl]);
 
+		// Response
+		res.json({
+			success: true,
+			message: "Page saved successfully",
+			imageUrl: imageUrl,
+		});
+	} catch (err) {
+		console.error("Error:", err);
+		res.status(500).json({ error: "Server error" });
+	}
+});
 
-
+//done adding test code
 
 
 app.post('/add-story', upload.array('images', 10), async (req, res) => { // asynchronous HTTPS POST request to upload an array of images (in multiform data) and the story to a database and s3 file system
