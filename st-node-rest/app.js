@@ -169,19 +169,19 @@ app.post("/upload", upload.single("image"), async (req, res) => {
 	try {
 		const { user_id, page_name, text_content } = req.body;
 		if (!user_id) {
-      print("Missing required fields: User_id")
+      console.log("Missing required fields: User_id")
 			return res.status(400).json({ error: "Missing required fields" });
 		}
     if (!page_name) {
-      print("Missing required fields: Page_name")
+      console.log("Missing required fields: Page_name")
 			return res.status(400).json({ error: "Missing required fields" });
 		}
     if (!text_content) {
-      print("Missing required fields: Text_content")
+      console.log("Missing required fields: Text_content")
 			return res.status(400).json({ error: "Missing required fields" });
 		}
     if (!req.file) {
-      print("Missing required fields: image files")
+      prconsole.logint("Missing required fields: image files")
 			return res.status(400).json({ error: "Missing required fields" });
 		}
 

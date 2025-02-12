@@ -182,4 +182,4 @@ func save_page():
 			file.close()
 	else:
 		var image = get_image_content()
-		DataScript.send_page(user_id, name,page_text.text, image)
+		DataScript.send_page(user_id, name, page_text.text, image)
