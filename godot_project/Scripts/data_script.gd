@@ -154,6 +154,17 @@ func generate_multipart_data(data, boundary): # creates the multipart form data 
 				body.append_array(FileAccess.get_file_as_bytes(item)) # add the bytes of the image file
 				line = "\r\n"
 				body.append_array(line.to_utf8_buffer()) # close the image section of the form
+		elif key == "image":
+			var mime_type = get_extention(value) # get the image extention as png, jpeg, etc
+			line = "--" + boundary + "\r\n" # open the image section of the form
+			body.append_array(line.to_utf8_buffer())
+			line = "Content-Disposition: form-data; name=\"" + key + "\"; filename=\"image." + mime_type + "\"\r\n"
+			body.append_array(line.to_utf8_buffer())
+			line = "Content-Type: image/" + mime_type + "\r\n\r\n"
+			body.append_array(line.to_utf8_buffer())
+			body.append_array(FileAccess.get_file_as_bytes(value)) # add the bytes of the image file
+			line = "\r\n"
+			body.append_array(line.to_utf8_buffer()) # close the image section of the form
 		else: # add other data to the multipart form
 			line = "--" + boundary + "\r\n"
 			body.append_array(line.to_utf8_buffer())
@@ -296,10 +307,8 @@ func send_page(user_id: int, page_name: String, text_content: String, image):
 		"user_id" = user_id,
 		"page_name" = page_name,
 		"text_content" = text_content,
-		"image" = null
+		"image" = image
 	}
-	var image_bytes = image
-	form_data["image"] = image_bytes
 	var boundary = "----WebKitFormBoundary7MA4YWxkTrZu0gW"
 	var body = generate_multipart_data(form_data, boundary)
 	var headers = [
