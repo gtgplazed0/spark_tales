@@ -168,20 +168,8 @@ app.post('/login', async (req, res) => { //asynchronous HTTPS POST request to si
 app.post("/upload", upload.single("image"), async (req, res) => {
 	try {
 		const { user_id, page_name, text_content } = req.body;
-		if (!user_id) {
-      console.log("Missing required fields: User_id")
-			return res.status(400).json({ error: "Missing required fields" });
-		}
-    if (!page_name) {
-      console.log("Missing required fields: Page_name")
-			return res.status(400).json({ error: "Missing required fields" });
-		}
-    if (!text_content) {
-      console.log("Missing required fields: Text_content")
-			return res.status(400).json({ error: "Missing required fields" });
-		}
-    if (!req.file) {
-      console.log("Missing required fields: image files")
+		if (!user_id || !page_name || !text_content || !req.file) {
+      console.log("Missing required fields")
 			return res.status(400).json({ error: "Missing required fields" });
 		}
 
@@ -213,6 +201,25 @@ app.post("/upload", upload.single("image"), async (req, res) => {
 		console.error("Error:", err);
 		res.status(500).json({ error: "Server error" });
 	}
+});
+
+app.get('/get-save', async (req, res) => {
+  try{
+    const {user_id, page_name} = req.query;
+    if (!user_id || !page_name) {
+      return res.status(400).json({error: "Incorrect data. Needs user_id and page_name"})
+    }
+    const sql = "Select text_content, image_url FROM page_modifications WHERE user_id = ? AND page_name = ?";
+    const [rows] = await db.execute(sql, [user_id, page_name]);
+		if (rows.length === 0) {
+			return res.status(404).json({ error: "Page not found" });
+		}
+		// Send response with text content and image URL
+		res.json({ text_content: rows[0].text_content, image_url: rows[0].image_url });
+  } catch (err){
+    console.error("Error:", err);
+		res.status(500).json({ error: "Server error" });
+  }
 });
 
 app.post('/add-story', upload.array('images', 10), async (req, res) => { // asynchronous HTTPS POST request to upload an array of images (in multiform data) and the story to a database and s3 file system

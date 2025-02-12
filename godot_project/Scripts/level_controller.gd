@@ -33,6 +33,8 @@ func first_page(level_number):
 		page_instance.is_editing()
 		print("firstedit")
 func next_page():
+	if editing:
+		correct_answer_to_pass = true
 	if correct_answer_to_pass == true:
 		correct_answer_to_pass = false
 		page_handling(1)
@@ -42,6 +44,8 @@ func previous_page():
 	correct_answer_to_pass = true
 		
 func finished_story(editing):
+	if editing:
+		correct_answer_to_pass = true
 	if correct_answer_to_pass == true:
 		correct_answer_to_pass = false
 		if editing:

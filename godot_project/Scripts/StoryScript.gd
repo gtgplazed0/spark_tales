@@ -67,6 +67,7 @@ func _on_yes_or_no(yes_or_no):
 			var is_correct = child.is_in_group("correct")
 			buttons_pressed_handling(answer, true if is_correct else false)
 			show_popup("correct" if is_correct else "incorrect")
+				
 			
 func buttons_pressed_handling(signal_to_emit, emit_param):
 	SoundFx.play("click")
