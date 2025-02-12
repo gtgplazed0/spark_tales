@@ -32,8 +32,6 @@ const s3 = new AWS.S3({
   region: "us-east-2",
 });
 
-// Usage
-uploadFile('test.jpeg', 'saturn2');
 
 const db = mysql.createPool({ //creating conenction to database using the mysql library and the credentials to my MySQL database
   //using environment variables that connect to my railway hosting platform to hide and encrypt sensitive data
