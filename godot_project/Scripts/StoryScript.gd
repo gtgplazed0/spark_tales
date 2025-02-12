@@ -94,7 +94,7 @@ func page_setup():
 				file.close()
 				page_text.text = stored_text
 		else:
-			print("file not here")
+			print("file not here and this is not setup")
 	story_num = get_story_num()
 
 func get_text_content():
@@ -181,5 +181,5 @@ func save_page():
 			file.store_var(stored_text)
 			file.close()
 	else:
-		#save to database or update if already there =
-		print("no file")
+		var image = get_image_content()
+		DataScript.send_page(user_id, name,page_text.text, image)

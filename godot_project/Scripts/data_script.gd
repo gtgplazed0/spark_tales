@@ -283,3 +283,33 @@ func get_text_from_scene(scene: Node) -> String: # gets the text on each page
 func get_extention(string_to_get: String): # gets the extension of an image (png, jpeg)
 	var extention = string_to_get.substr(string_to_get.find(".") + 1).to_lower()
 	return extention
+	
+	
+# TESTING STUFF
+# Call this function to send the image and data
+func send_page(user_id: int, page_name: String, text_content: String, image):
+	# Create HTTPRequest instance
+	var url = BASE_URL + "upload"
+	http_request = new_http("_on_send_page_request_completed")
+	# Prepare the body of the request
+	var form_data = {
+		"user_id" = user_id,
+		"page_name" = page_name,
+		"text_content" = text_content,
+		"image" = null
+	}
+	var image_bytes = image
+	form_data["image"] = image_bytes
+	var boundary = "----WebKitFormBoundary7MA4YWxkTrZu0gW"
+	var headers = [
+		"Content-Type: multipart/form-data; boundary=" + boundary
+	]
+	# Send the request to the Node.js API
+	http_request.request_raw(url, headers, HTTPClient.METHOD_POST, body)
+	
+func _on_send_page_request_completed(result, response_code, headers, body): # when upload story request completed
+	if response_code == 200: # successfull error code
+		print("Request Succeded")
+		print(str(body))
+	else: # error with request
+		print("Request Failed with response code: ", response_code)
