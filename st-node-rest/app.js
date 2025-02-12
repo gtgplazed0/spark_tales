@@ -173,6 +173,45 @@ app.post('/login', async (req, res) => { //asynchronous HTTPS POST request to si
   }
 });
 
+//Adding page contents
+app.post('/save_page', async (req, res) => {
+  const { user_id, page_name, text_content, image_url } = req.body;
+
+  if (!user_id || !page_name || !text_content || !image_url) {
+      return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  try {
+      const sql = `
+          INSERT INTO pages (user_id, page_name, text_content, image_url) 
+          VALUES (?, ?, ?, ?) 
+          ON DUPLICATE KEY UPDATE 
+              text_content = VALUES(text_content), 
+              image_url = VALUES(image_url);
+      `;
+
+      const params = [user_id, page_name, text_content, image_url];
+
+      const [result] = await db.execute(sql, params);
+
+      res.json({
+          success: true,
+          message: result.affectedRows > 1 ? "Page updated" : "Page created",
+      });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Database error" });
+  }
+});
+
+
+
+
+
+
+
+
+
 
 
 app.post('/add-story', upload.array('images', 10), async (req, res) => { // asynchronous HTTPS POST request to upload an array of images (in multiform data) and the story to a database and s3 file system

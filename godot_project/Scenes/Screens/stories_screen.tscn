@@ -40,7 +40,7 @@ grow_horizontal = 2
 texture = ExtResource("1_ekieb")
 expand_mode = 1
 
-[node name="BackButton" parent="." instance=ExtResource("2_sxd6n")]
+[node name="StoryBackButton" parent="." instance=ExtResource("2_sxd6n")]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0
@@ -86,28 +86,4 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="StoryLevelButton4" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
-layout_mode = 2
-
-[node name="StoryLevelButton5" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
-layout_mode = 2
-
-[node name="StoryLevelButton6" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
-layout_mode = 2
-
-[node name="StoryLevelButton7" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
-layout_mode = 2
-
-[node name="StoryLevelButton8" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
-layout_mode = 2
-
-[node name="StoryLevelButton9" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
-layout_mode = 2
-
-[node name="StoryLevelButton10" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
-layout_mode = 2
-
-[node name="StoryLevelButton11" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
-layout_mode = 2
-
-[node name="StoryLevelButton12" parent="ScrollContainer/VBoxContainer/GridContainer" instance=ExtResource("5_0v8qo")]
 layout_mode = 2

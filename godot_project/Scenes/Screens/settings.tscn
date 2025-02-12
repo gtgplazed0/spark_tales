@@ -149,7 +149,7 @@ theme_override_styles/grabber_area = SubResource("StyleBoxLine_8rrw5")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_s8g7p")
 max_value = 0.8
 step = 0.001
-audio_bus_name = "Music"
+AUDIO_BUS_NAME = "Music"
 
 [node name="SoundVolumeLabel" type="Label" parent="SettingsTexture"]
 layout_mode = 0
@@ -171,7 +171,7 @@ theme_override_styles/grabber_area = SubResource("StyleBoxLine_08d8r")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_tmlvp")
 max_value = 4.0
 step = 0.001
-audio_bus_name = "SoundFX"
+AUDIO_BUS_NAME = "SoundFX"
 
 [node name="TextSizeLabel" type="Label" parent="SettingsTexture"]
 layout_mode = 0

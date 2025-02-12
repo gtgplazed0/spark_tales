@@ -1,121 +1,123 @@
 extends Control
-@onready var signup_username_edit = $Signup/SignupUsernameEdit
-@onready var signup_password_edit = $Signup/SignupPasswordEdit
-@onready var signup_repassword_edit = $Signup/SignupRePasswordEdit
-@onready var signup_error_message = $Signup/SignupErrorMessage
+#Signup variables
+@onready var SIGNUP_USERNAME_EDIT = $Signup/SignupUsernameEdit
+@onready var SIGNUP_PASSWORD_EDIT = $Signup/SignupPasswordEdit
+@onready var SIGNUP_REPASSWORD_EDIT = $Signup/SignupRePasswordEdit
+@onready var SIGNUP_ERROR_MESSAGE = $Signup/SignupErrorMessage
+#Login Variables
+@onready var LOGIN_USERNAME_EDIT = $Login/LoginUsernameEdit
+@onready var LOGIN_PASSWORD_EDIT = $Login/LoginPasswordEdit
+@onready var LOGIN_ERROR_MESSAGE = $Login/LoginErrorMessage
 
-@onready var login_username_edit = $Login/LoginUsernameEdit
-@onready var login_password_edit = $Login/LoginPasswordEdit
-@onready var login_error_message = $Login/LoginErrorMessage
+@onready var LOGIN_SCREEN = $Login
+@onready var SIGNUP_SCREEN = $Signup
+@onready var LOG_OR_SIGN = $LogOrSign
+@onready var CURRENTLY_SIGNED_IN = $CurrentlySignedIn
 
-@onready var login_screen = $Login
-@onready var signup_screen = $Signup
-@onready var log_or_sign = $LogOrSign
-@onready var currently_signed_in = $CurrentlySignedIn
-
-@onready var edit_button = $CurrentlySignedIn/EditButton
-@onready var stop_edit_button = $CurrentlySignedIn/StopEditButton
+@onready var EDIT_BUTTON = $CurrentlySignedIn/EditButton
+@onready var STOP_EDIT_BUTTON = $CurrentlySignedIn/StopEditButton
 
 var logged_in = false
 var user_id
-var editing = false
+var editing
 signal new_logged_in
 signal start_editing
+signal stop_editing
+signal log_out
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	log_or_sign.visible = true
-	login_screen.visible = false
-	signup_screen.visible = false
-	currently_signed_in.visible = false
+	visability(true, false, false, false)
 
-func ready_screens():
-	print(logged_in)
+func open_screens():
 	if logged_in == false:
 		TextToSpeech.speak_text("Parents. Create New Account or Log into Existing Account?")
-		log_or_sign.visible = true
-		login_screen.visible = false
-		signup_screen.visible = false
-		currently_signed_in.visible = false
+		visability(true, false, false, false)
 	else:
 		TextToSpeech.speak_text("Parents. You're already logged in! Log Out?")
-		log_or_sign.visible = false
-		login_screen.visible = false
-		signup_screen.visible = false
-		currently_signed_in.visible = true
-	if !editing:
-		edit_button.visible = true
-		stop_edit_button.visible = false
+		visability(false, false, false, true)
+	if editing == false:
+		EDIT_BUTTON.visible = true
+		STOP_EDIT_BUTTON.visible = false
 	else:
-		edit_button.visible = false
-		stop_edit_button.visible = true
+		EDIT_BUTTON.visible = false
+		STOP_EDIT_BUTTON.visible = true
+		
 func _on_existing_pressed() -> void:
 	TextToSpeech.speak_text("Parents Login. Username. Password. Sign In!")
 	SoundFx.play("click")
-	log_or_sign.visible = false
-	signup_screen.visible = false
-	login_screen.visible = true
-	login_error_message.text = ''
+	visability(false, true, false, false)
+	LOGIN_ERROR_MESSAGE.text = ''
 	
 func _on_new_acc_pressed() -> void:
 	TextToSpeech.speak_text("Parents Sign Up. Username. Password. Re-Enter Password. Sign up.")
 	SoundFx.play("click")
-	log_or_sign.visible = false
-	login_screen.visible = false
-	signup_screen.visible = true
-	signup_error_message.text = ''
+	visability(false, false, true, false)
+	SIGNUP_ERROR_MESSAGE.text = ''
 
 func _on_signup_login_button_pressed() -> void:
 	SoundFx.play("click")
-	var temp_user = signup_username_edit.text
-	var temp_password = signup_password_edit.text
-	var temp_repassword = signup_repassword_edit.text
+	var temp_user = SIGNUP_USERNAME_EDIT.text
+	var temp_password = SIGNUP_PASSWORD_EDIT.text
+	var temp_repassword = SIGNUP_REPASSWORD_EDIT.text
 	if temp_password != temp_repassword:
-		signup_error_message.text = "password does not match the re-entered password"
+		SIGNUP_ERROR_MESSAGE.text = "password does not match the re-entered password"
 	else: 
 		if Passwords.valid_pass(temp_password):
 			var hashedpass = Passwords.create_hashed_password(temp_password)
-			signup_username_edit.text = ''
-			signup_password_edit.text = ''
-			signup_repassword_edit.text = ''
+			SIGNUP_USERNAME_EDIT.text = ''
+			SIGNUP_PASSWORD_EDIT.text = ''
+			SIGNUP_REPASSWORD_EDIT.text = ''
 			var sign_up_worked = await DataScript.upload_user(temp_user, hashedpass["salt"], hashedpass["hash"])
 			if sign_up_worked == -2:
-				signup_error_message.text = "User Already Exists. Please Sign in or try again"
+				SIGNUP_ERROR_MESSAGE.text = "User Already Exists. Please Sign in or try again"
 			elif sign_up_worked == -1:
-				signup_error_message.text = "Error sending or reading username. Please try again"
+				SIGNUP_ERROR_MESSAGE.text = "Error sending or reading username. Please try again"
 			else:
 				new_logged_in.emit()
-				signup_error_message.text = ''
+				SIGNUP_ERROR_MESSAGE.text = ''
 				logged_in = true
 		else:
-			signup_error_message.text = "Password is not valid. Must be 8 characters or longer, Must include a capital, Must include a number"
+			SIGNUP_ERROR_MESSAGE.text = "Password is not valid. Must be 8 characters or longer, Must include a capital, Must include a number"
 
 func _on_login_button_pressed() -> void:
 	SoundFx.play("click")
-	var temp_user = login_username_edit.text
-	var temp_pass = login_password_edit.text
-	login_password_edit.text = ''
-	login_username_edit.text = ''
+	var temp_user = LOGIN_USERNAME_EDIT.text
+	var temp_pass = LOGIN_PASSWORD_EDIT.text
+	LOGIN_PASSWORD_EDIT.text = ''
+	LOGIN_USERNAME_EDIT.text = ''
 	if temp_user.length() > 0 and Passwords.valid_pass(temp_pass):
 		var sign_in_worked = await DataScript.login(temp_user, temp_pass)
 		if sign_in_worked == -1:
-			login_error_message.text = "Error. Log in did not work. Please try again"
+			LOGIN_ERROR_MESSAGE.text = "Error. Log in did not work. Please try again"
 		elif sign_in_worked == -4:
-			login_error_message.text = "Invalid Username or Password. Please try again"
+			LOGIN_ERROR_MESSAGE.text = "Invalid Username or Password. Please try again"
 		else:
 			new_logged_in.emit()
-			login_error_message.text = ''
+			LOGIN_ERROR_MESSAGE.text = ''
 			logged_in = true
 	else:
-		login_error_message.text = "Invalid Username or Password. Please try again"
+		LOGIN_ERROR_MESSAGE.text = "Invalid Username or Password. Please try again"
 		
 func _on_log_out_button_pressed() -> void:
 	SoundFx.play("click")
 	#add saving data and load up guest items
 	DataScript.user_id = 1
 	logged_in = false
-	new_logged_in.emit() # brings back to title screen.
+	log_out.emit()
 	
 func _on_edit_button_pressed() -> void:
-	editing = true
 	start_editing.emit()
+	
+func visability(l_o_s, l_s, s_s, c_s_i):
+	LOG_OR_SIGN.visible = l_o_s
+	LOGIN_SCREEN.visible = l_s
+	SIGNUP_SCREEN.visible = s_s
+	CURRENTLY_SIGNED_IN.visible = c_s_i
+	
+func now_editing():
+	editing = true
+
+
+func _on_stop_edit_button_pressed() -> void:
+	stop_editing.emit()

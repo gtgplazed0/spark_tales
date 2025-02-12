@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://btm8r6c0wrajy"]
+[gd_scene load_steps=22 format=3 uid="uid://btm8r6c0wrajy"]
 
 [ext_resource type="LabelSettings" uid="uid://b8fgg5srn2g7h" path="res://themes/UserPassLabelTheme.tres" id="1_2ba7c"]
 [ext_resource type="Script" path="res://Scripts/Screens/login_screen.gd" id="1_tg2gy"]
@@ -16,6 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://dfo3xmlox1j3f" path="res://Assets/Textures/Buttons/SignInButtons/LogOutBTNPressed.png" id="14_127pq"]
 [ext_resource type="Texture2D" uid="uid://bobpgtt2461mg" path="res://Assets/Textures/Buttons/SignInButtons/EditButton.png" id="15_b1f0f"]
 [ext_resource type="Texture2D" uid="uid://mqyhkskrwidx" path="res://Assets/Textures/Buttons/SignInButtons/EditButtonPressed.png" id="16_ecry1"]
+[ext_resource type="Texture2D" uid="uid://d1dtmlqvnberm" path="res://Assets/Textures/Buttons/StopEditingButton.png" id="17_5nf6o"]
+[ext_resource type="Texture2D" uid="uid://c20mkcyec60yn" path="res://Assets/Textures/Buttons/StopEditingButtonPressed.png" id="18_hta48"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kmpnh"]
 font_size = 100
@@ -37,7 +39,7 @@ font_color = Color(0.192157, 0.192157, 0.192157, 1)
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
-[node name="ParentLoginScreen" type="Control"]
+[node name="ParentLoginScreen" type="Control" groups=["editable"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -132,11 +134,11 @@ offset_bottom = 449.0
 theme_override_font_sizes/font_size = 35
 placeholder_text = "Enter Password Here"
 max_length = 20
-secret = true
-secret_character = "*"
 virtual_keyboard_type = 6
 clear_button_enabled = true
 select_all_on_focus = true
+secret = true
+secret_character = "*"
 
 [node name="LSBackButton" parent="Login" instance=ExtResource("2_h2xp3")]
 layout_mode = 0
@@ -289,11 +291,11 @@ offset_bottom = 360.0
 theme_override_font_sizes/font_size = 35
 placeholder_text = "Enter Password Here"
 max_length = 20
-secret = true
-secret_character = "*"
 virtual_keyboard_type = 6
 clear_button_enabled = true
 select_all_on_focus = true
+secret = true
+secret_character = "*"
 
 [node name="SignupRePasswordEdit" type="LineEdit" parent="Signup"]
 layout_mode = 0
@@ -304,11 +306,11 @@ offset_bottom = 500.0
 theme_override_font_sizes/font_size = 35
 placeholder_text = "Enter Password Here"
 max_length = 20
-secret = true
-secret_character = "*"
 virtual_keyboard_type = 6
 clear_button_enabled = true
 select_all_on_focus = true
+secret = true
+secret_character = "*"
 
 [node name="LSBackButton" parent="Signup" instance=ExtResource("2_h2xp3")]
 layout_mode = 0
@@ -373,7 +375,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BackButton" parent="LogOrSign" instance=ExtResource("2_h2xp3")]
+[node name="ParentBackButton" parent="LogOrSign" instance=ExtResource("2_h2xp3")]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0
@@ -445,8 +447,10 @@ offset_top = 66.0
 offset_right = 372.0
 offset_bottom = 153.0
 grow_horizontal = 2
-text = "You're Already Signed in!"
+text = "You're Signed in!"
 label_settings = SubResource("LabelSettings_v53fl")
+horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="LogOutButton" type="TextureButton" parent="CurrentlySignedIn"]
@@ -467,7 +471,7 @@ texture_pressed = ExtResource("14_127pq")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="BackButton" parent="CurrentlySignedIn" instance=ExtResource("2_h2xp3")]
+[node name="ParentBackButton" parent="CurrentlySignedIn" instance=ExtResource("2_h2xp3")]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0
@@ -497,8 +501,14 @@ stretch_mode = 4
 
 [node name="StopEditButton" type="TextureButton" parent="CurrentlySignedIn"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 397.0
+offset_top = 487.0
+offset_right = 782.0
+offset_bottom = 736.0
+texture_normal = ExtResource("17_5nf6o")
+texture_pressed = ExtResource("18_hta48")
+ignore_texture_size = true
+stretch_mode = 0
 
 [connection signal="pressed" from="Login/LoginButton" to="." method="_on_login_button_pressed"]
 [connection signal="pressed" from="Signup/SignupLoginButton" to="." method="_on_signup_login_button_pressed"]
@@ -506,3 +516,4 @@ offset_bottom = 40.0
 [connection signal="pressed" from="LogOrSign/NewAcc" to="." method="_on_new_acc_pressed"]
 [connection signal="pressed" from="CurrentlySignedIn/LogOutButton" to="." method="_on_log_out_button_pressed"]
 [connection signal="pressed" from="CurrentlySignedIn/EditButton" to="." method="_on_edit_button_pressed"]
+[connection signal="pressed" from="CurrentlySignedIn/StopEditButton" to="." method="_on_stop_edit_button_pressed"]

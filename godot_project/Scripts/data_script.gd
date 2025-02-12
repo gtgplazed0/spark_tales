@@ -4,7 +4,7 @@ var http_request : HTTPRequest
 var user_id = 1 # id of the current user, is set to one if user is a guest
 var sign_up_worked = 1 #flag value checking sign up
 # -1 = failed,  1 = worked,  -2 = user already exists,   -3 = user_id not found,  -4 = bad user or pass  
-var base_url = "https://compsciia-production.up.railway.app/" # base of the API's url
+const BASE_URL = "https://compsciia-production.up.railway.app/" # base of the API's url
 
 func new_http(completed_func): # creates a new http request object
 	var http_request = HTTPRequest.new()
@@ -13,7 +13,7 @@ func new_http(completed_func): # creates a new http request object
 	return http_request
 	
 func upload_user(username: String, salt: String, hashed_password: String): # upload user HTTP request
-	var url = base_url + "users" # url of this endpoint in the server
+	var url = BASE_URL + "users" # url of this endpoint in the server
 	var http_request = new_http("_on_upload_user_request_completed") # create the http object
 	# create and stringify the data for the request
 	var data = {
@@ -63,7 +63,7 @@ func _on_upload_user_request_completed(_result, response_code, _headers, body): 
 
 func login(username: String, password: String): # log in user http reuqest
 	var http_request = new_http("_on_login_request_completed") # create the http request object and connect to the completed function
-	var url = base_url + "login" # login url endpoint
+	var url = BASE_URL + "login" # login url endpoint
 
 	# Data to send in the request body, converted to json format
 	var data = {
@@ -109,7 +109,7 @@ func _on_login_request_completed(_result, response_code, _headers, body): # logi
 		sign_up_worked = -1
 		
 func upload_story(title: String, pages:Array, images:Array): # endpoint for uploading storys
-	var url = "https://compsciia-production.up.railway.app/add-story" # url for uploading stories
+	var url = BASE_URL + "add-story" # url for uploading stories
 	# Prepare HTTPRequest
 	var http_request = new_http("_on_upload_story_request_completed")
 	# create data to be turned to multipost form data

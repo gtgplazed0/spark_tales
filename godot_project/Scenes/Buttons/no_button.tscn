@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dh0jqresmn1yn"]
+
+[ext_resource type="Texture2D" uid="uid://cqntd2pjnp2mh" path="res://Assets/Textures/Buttons/NoButton.png" id="1_2s7gd"]
+[ext_resource type="Texture2D" uid="uid://tkciwkwmau7k" path="res://Assets/Textures/Buttons/NoButtonPressed.png" id="2_xh0nb"]
+[ext_resource type="Script" path="res://Scripts/yes_no_button.gd" id="3_pleab"]
+
+[node name="NoButton" type="TextureButton" groups=["no"]]
+offset_right = 186.0
+offset_bottom = 108.0
+texture_normal = ExtResource("1_2s7gd")
+texture_pressed = ExtResource("2_xh0nb")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("3_pleab")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
