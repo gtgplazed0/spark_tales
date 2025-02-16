@@ -216,7 +216,7 @@ app.get('/get-save', async (req, res) => {
 			return res.status(404).json({ error: "Page not found" });
 		}
     const image_url = rows[0].image_url
-    const extension = ".png"
+    const extension = path.extname(image_url)
     // Extract S3 file key from URL
 		const fileKey = image_url.split("/").pop();
 
