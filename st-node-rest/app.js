@@ -264,7 +264,7 @@ app.post("/upload-sticker", upload.single("image"), async (req, res) => {
 		const sticker_url = uploadResult.Location; // S3 File URL
 
 		// Save details to the database
-		const sql = `INSERT INTO stickers (user_id, sticker_url) VALUES (?, ?, ?)`;
+		const sql = `INSERT INTO stickers (user_id, sticker_url) VALUES (?, ?)`;
 		await db.execute(sql, [user_id, sticker_url]);
 
 		// Response
