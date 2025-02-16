@@ -2,7 +2,7 @@ extends Node
 # Declare the HTTPRequest variable
 var http_request : HTTPRequest
 var user_id = 0 # id of the current user, is set to 0 for no log in, 1 if user is a guest
-var text_url_extention_from_save = {"text":null, "url":null, "ext": null, "worked": false}
+var text_url_from_save = {"text":null, "url":null, "worked": false}
 var get_image_worked = false
 var texture_from_get_image = false
 var extention
@@ -111,55 +111,13 @@ func _on_login_request_completed(_result, response_code, _headers, body): # logi
 	else: # the request failed
 		print("Failed to send data. Response code: %d" % response_code)  # Log failure with response code
 		sign_up_worked = -1
-		
-func upload_story(title: String, pages:Array, images:Array): # endpoint for uploading storys
-	var url = BASE_URL + "add-story" # url for uploading stories
-	# Prepare HTTPRequest
-	var http_request = new_http("_on_upload_story_request_completed")
-	# create data to be turned to multipost form data
-	var form_data = {
-		"user_id": user_id,
-		"title": title,
-		"pages": JSON.stringify(pages),
-		"images": []
-	}
-	for image in images:
-		var image_bytes = image
-		form_data["images"].append(image_bytes) # add the image to the form data
-	var boundary = "----WebKitFormBoundary7MA4YWxkTrZu0gW" # boundry for multipost form data
-	var body = generate_multipart_data(form_data, boundary) # generate the body for the request as multipost
-	var headers = [ # set the correct headers
-		"Content-Type: multipart/form-data; boundary=" + boundary
-	]
-	http_request.request_raw(url, headers, HTTPClient.METHOD_POST, body) # send the reuqest
-	
-func _on_upload_story_request_completed(result, response_code, headers, body): # when upload story request completed
-	if response_code == 200: # successfull error code
-		print("Request Succeded")
-		print(str(body))
-	else: # error with request
-		print("Request Failed with response code: ", response_code)
-		
 func generate_multipart_data(data, boundary): # creates the multipart form data for the stories uploading
 	var line = "" # this is a placeholder for the current line to upload to the packedbytearray data
 	var body = PackedByteArray() # body of request
 	for key in data.keys(): # for each key in the data dictionary
 		var value = data[key] # get the items relating to the key
-		# For image data, we need to handle the file part specifically
-		if key == "images":
-			for item in value:
-				var mime_type = get_extention(item) # get the image extention as png, jpeg, etc
-				line = "--" + boundary + "\r\n" # open the image section of the form
-				body.append_array(line.to_utf8_buffer())
-				line = "Content-Disposition: form-data; name=\"" + key + "\"; filename=\"image." + mime_type + "\"\r\n"
-				body.append_array(line.to_utf8_buffer())
-				line = "Content-Type: image/" + mime_type + "\r\n\r\n"
-				body.append_array(line.to_utf8_buffer())
-				body.append_array(FileAccess.get_file_as_bytes(item)) # add the bytes of the image file
-				line = "\r\n"
-				body.append_array(line.to_utf8_buffer()) # close the image section of the form
-		elif key == "image":
-			var mime_type = get_extention(value) # get the image extention as png, jpeg, etc
+		if key == "image":
+			var mime_type = "png" # get the image extention as png
 			line = "--" + boundary + "\r\n" # open the image section of the form
 			body.append_array(line.to_utf8_buffer())
 			line = "Content-Disposition: form-data; name=\"" + key + "\"; filename=\"image." + mime_type + "\"\r\n"
@@ -179,127 +137,11 @@ func generate_multipart_data(data, boundary): # creates the multipart form data 
 	line = "--" + boundary + "--\r\n" # close the body
 	body.append_array(line.to_utf8_buffer())
 	return body
-	
-func process_story(story_folder: String, user_id: int, title: String): # get story ready for uploading
-	var pages # all pages to uplaod
-	var page_names = [] # names of pages used to create the array of added pages
-	var page_numbers = [] # number of each page used to create array of added pages
-	var image_arr = [] # array of image to uplaod
-	var story_dir = "res://Scenes/Levels/" # where all storys are located
-	var story_path = story_dir + str(story_folder) + "/" # specific story location
-	var dir = DirAccess.open(story_path) # open the story and check if it exists
-	if dir.dir_exists:
-		dir.list_dir_begin()
-		var file_name = dir.get_next() # get the current file 
-		while (file_name != ""): # if there is still files
-			if dir.current_is_dir(): # if the item is a folder
-				pass
-			else: # if the item is not a folder it is a page
-				page_names.append(file_name) # add the name of the page to page_names
-			file_name = dir.get_next() # keep getting the next file to add all page_names
-		sort_pages(page_names) # use custom sorting to sort the pages in order (page1, page2)
-	else:
-		print("An error occurred when trying to access the path.")
-	page_numbers = get_page_numbers(page_names) # get the number of each page
-	pages = create_pages_arr(page_names, page_numbers, story_path) # create the pages data to send
-	image_arr = create_image_arr(page_names, story_path) # create the image array to send
-	upload_story(title, pages, image_arr) # send the data and upload the story to the database
-	
-func get_page_numbers(page_names):
-	var page_numbers = []
-	for page in page_names: 
-		var index = page.find(".tscn") # find the index of the text before the number
-		if index != -1: 
-			var number_string = page.substr(index - 1, index) # get the number through string splicing
-			var number = number_string
-			page_numbers.append(number) # add the number to page_numbers
-		else:
-			print("The expected format 'P.tscn' not found in the string.")
-	return page_numbers # return all page numbers
-
-func sort_pages(scenes_array: Array):
-	var n = scenes_array.size() # amount of items in array
-	var page_numbers = [] # holds the page number
-	for item in scenes_array:
-		var index_of_num = (item.find("P")) + 1 # find the pages number and the index of that number
-		page_numbers.append(item[index_of_num])
-	for end in range(n, 1, -1): # use this to create a "sorted" section of numbers
-		var max_position = 0 # biggest number
-		for i in range(1, end ): # go through all items in "unsorted" section
-			if page_numbers[i] > page_numbers[max_position]: # used to find the largest number
-				max_position = i
-		# this logic below switches the largest number with the last number in the unsorted section, sorting the numbers
-		var temp_num = page_numbers[end - 1]
-		var temp_scene = scenes_array[end - 1]
-		page_numbers[end -1 ] = page_numbers[max_position]
-		scenes_array[end - 1] = scenes_array[max_position]
-		page_numbers[max_position] = temp_num
-		scenes_array[max_position] = temp_scene
-
-func create_pages_arr(page_names: Array, page_numbers: Array, story_folder_path): # creates the array containing pages with text and images
-	var pages = []
-	for i in range(page_names.size()):
-		var scene_name = page_names[i]
-		var page_number = page_numbers[i]
-		# Load the scene dynamically
-		var scene = load_scene(story_folder_path + scene_name)
-		if scene != null:
-			# Get the text content from the scene's method
-			var text_content = get_text_from_scene(scene)       
-			if text_content != "":
-				# Add the page as a dictionary to the pages array
-				var page = {
-					"page_number": page_number,
-					"text_content": str(text_content)
-					}
-				pages.append(page)
-	# Now you have the pages array populated
-	print(pages)
-	return pages
-# Function to load a scene dynamically
-
-func load_scene(scene_path: String) -> Node: # loads each page so you can check for text or images
-	var scene = load(scene_path)
-	if scene:
-		return scene.instantiate()  # Instantiate the scene if it's loaded successfully
-	else:
-		print("Error loading scene: ", scene_path)
-		return null
-# Function to get the text from the scene (Assuming each scene has a method `get_text_content`)
-
-func create_image_arr(page_names, story_folder_path): # creates an array of the images in each story
-	var image_arr = []
-	for i in range(page_names.size()):
-		var scene_name = page_names[i]
-		# Load the scene dynamically
-		var scene = load_scene(story_folder_path + scene_name)
-		if scene != null:
-			# Get the text content from the scene's method
-			var image_content = get_image_from_scene(scene)       
-			if image_content != null:
-				image_arr.append(image_content)
-	# Now you have the pages array populated
-	return image_arr
-	
-func get_image_from_scene(scene: Node): # gets the image from each  page
-	if scene.has_method("get_image_content"):
-		return scene.get_image_content()
-	else:
-		print("Scene doesnt have the get_image_content method.")
-		return null
-		
-func get_text_from_scene(scene: Node) -> String: # gets the text on each page
-	if scene.has_method("get_text_content"): # create methods here
-		return scene.get_text_content()  # Call the method and return the text
-	else:
-		print("Scene doesn't have the get_text_content method!")
-		return ""
 		
 func get_extention(string_to_get: String): # gets the extension of an image (png, jpeg)
 	var extention = string_to_get.substr(string_to_get.find(".") + 1).to_lower()
 	return extention
-	
-	
+		
 # TESTING STUFF
 # Call this function to send the image and data
 func send_page(user_id: int, page_name: String, text_content: String, image):
@@ -334,7 +176,7 @@ func get_page_modifications(user_id:int, page_name:String):
 	var headers = ["Content-Type: application/json"]
 	http_request.request(url, headers, HTTPClient.METHOD_GET)
 	await http_request.request_completed
-	return text_url_extention_from_save
+	return text_url_from_save
 
 func _on_get_page_modifications(result, response_code, headers, body):
 	if response_code == 200:
@@ -342,15 +184,13 @@ func _on_get_page_modifications(result, response_code, headers, body):
 			if json:
 				# Set text content and url
 				var text = json["text_content"]
-				text_url_extention_from_save["text"] = text
+				text_url_from_save["text"] = text
 				var image_url = json["image_url"]
-				text_url_extention_from_save["url"] = image_url
-				var extention = json["ext"]
-				text_url_extention_from_save["ext"] = extention
-				text_url_extention_from_save["worked"] = true
+				text_url_from_save["url"] = image_url
+				text_url_from_save["worked"] = true
 	else:
 		print("Error fetching data, response code:", response_code)
-		text_url_extention_from_save["worked"] = false
+		text_url_from_save["worked"] = false
 		
 		
 func get_image(image_url, ext):

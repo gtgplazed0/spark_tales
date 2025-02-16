@@ -105,13 +105,12 @@ func page_setup():
 				page_image.texture = texture
 	else:
 		print("the User id is being setup as " + str(user_id))
-		var text_url_and_ext = await DataScript.get_page_modifications(user_id, name)
-		if text_url_and_ext["worked"] == true:
-			print(text_url_and_ext["text"])
-			page_text.text = text_url_and_ext["text"]
-			var url = text_url_and_ext["url"]
-			var extention = text_url_and_ext["ext"]
-			var texture = await DataScript.get_image(url, extention)
+		var text_and_url= await DataScript.get_page_modifications(user_id, name)
+		if text_and_url["worked"] == true:
+			print(text_and_url["text"])
+			page_text.text = text_and_url["text"]
+			var url = text_and_url["url"]
+			var texture = await DataScript.get_image(url, "png")
 			if DataScript.get_image_worked == true:
 				page_image.texture = texture
 		else:
