@@ -195,7 +195,7 @@ func _on_get_page_modifications(result, response_code, headers, body):
 		
 func get_image(image_url, ext):
 	get_image_worked = true
-	extention = ext
+	extention = extension_from_save
 	http_request = new_http("_on_get_image_request_completed")
 	var headers = []
 	var err = http_request.request(image_url, headers ,HTTPClient.METHOD_GET)
@@ -203,12 +203,13 @@ func get_image(image_url, ext):
 		print("Error making request: ", err)
 		get_image_worked = false
 	await http_request.request_completed
+	print("Texture from get image: " + str(texture_from_get_image))
 	return texture_from_get_image
 	
 
 func _on_get_image_request_completed(result, response_code, headers, body):
 	if response_code == 200:
-		print("getting an image worked")
+		print("getting an image worked: " + str(body))
 		get_image_worked = true
 		var image = Image.new()
 		var error
