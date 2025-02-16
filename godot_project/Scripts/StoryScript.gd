@@ -110,7 +110,8 @@ func page_setup():
 			print(text_and_url["text"])
 			page_text.text = text_and_url["text"]
 			var url = text_and_url["url"]
-			var texture = await DataScript.get_image(url, "png")
+			var ext = DataScript.extention
+			var texture = await DataScript.get_image(url, ext)
 			if DataScript.get_image_worked == true:
 				page_image.texture = texture
 		else:

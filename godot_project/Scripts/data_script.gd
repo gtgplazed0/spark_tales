@@ -3,6 +3,7 @@ extends Node
 var http_request : HTTPRequest
 var user_id = 0 # id of the current user, is set to 0 for no log in, 1 if user is a guest
 var text_url_from_save = {"text":null, "url":null, "worked": false}
+var extension_from_save = null
 var get_image_worked = false
 var texture_from_get_image = false
 var extention
@@ -139,10 +140,6 @@ func generate_multipart_data(data, boundary): # creates the multipart form data 
 	body.append_array(line.to_utf8_buffer())
 	return body
 		
-func get_extention(string_to_get: String): # gets the extension of an image (png, jpeg)
-	var extention = string_to_get.substr(string_to_get.find(".") + 1).to_lower()
-	return extention
-		
 # TESTING STUFF
 # Call this function to send the image and data
 func send_page(user_id: int, page_name: String, text_content: String, image):
@@ -187,6 +184,8 @@ func _on_get_page_modifications(result, response_code, headers, body):
 				var text = json["text_content"]
 				text_url_from_save["text"] = text
 				var image_url = json["image_url"]
+				extension_from_save = json["ext"]
+				print(extension_from_save)
 				text_url_from_save["url"] = image_url
 				text_url_from_save["worked"] = true
 	else:
