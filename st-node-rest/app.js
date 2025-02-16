@@ -164,7 +164,7 @@ app.post('/login', async (req, res) => { //asynchronous HTTPS POST request to si
   }
 });
 
-// Endpoint to handle image upload
+// Endpoint to handle story modifications upload
 app.post("/upload", upload.single("image"), async (req, res) => {
 	try {
 		const { user_id, page_name, text_content } = req.body;
@@ -232,78 +232,4 @@ app.get('/get-save', async (req, res) => {
 		res.status(500).json({ error: "Server error" });
   }
 });
-
-app.post('/add-story', upload.array('images', 10), async (req, res) => { // asynchronous HTTPS POST request to upload an array of images (in multiform data) and the story to a database and s3 file system
-  const { user_id, title } = req.body; //get the user_id and title of the story from request body
-  if (!user_id || !title) {
-    return res.status(400).send('User ID and Story Title are required'); //errror status message
-  }
-  try {
-    const [storyResult] = await db.query(
-      'INSERT INTO stories (title, user_id) VALUES (?, ?)', //insert the user_id and the title into the database. Titles are unique to each user_id
-      [title, user_id]
-    );
-    const story_id = storyResult.insertId; //get the id of the new story
-    //add pages
-    const pages = JSON.parse(req.body.pages); // Pages info is sent as JSON string. parse the string 
-    for (let i = 0; i < pages.length; i++) {  //for loop to add all pages and image urls to the database in reference to their story_id
-      let imageUrl = null
-      const { page_number, text_content } = pages[i]; // get the page number and text on the page
-      // Check if there is a corresponding image file for this page
-      if (req.files && req.files[i]) {
-        const file = req.files[i]; // Get the file for the current page (if available)
-        imageUrl = file.location; //make the image url the file location
-      }
-      // Insert the page into the database
-      const [pageResult] = await db.query(
-        'INSERT INTO pages (story_id, page_number) VALUES (?, ?)',
-        [story_id, page_number]
-      );
-      const page_id = pageResult.insertId;
-
-      // Insert page content into the database, including the image URL if available
-      await db.query(
-        'INSERT INTO page_content (user_id, page_id, text_content, image_url) VALUES (?, ?, ?, ?)',
-        [user_id, page_id, text_content, imageUrl]
-      );
-    }
-      res.status(200).json({ success: true }); // success status message
-      console.log("inserted story into database! StoryID: ", story_id)
-    } catch (error) {
-      console.error('Error processing upload:', error); 
-      res.status(500).json({ error: 'Failed to process upload.' });// failure status message.
-    }
- });
- 
-
-
-app.delete('/delete-story/:story_id', async (req, res) => { // use a HTTPS DELETE request to delete a story. Database uses cascade to delete pages and content
-    const { story_id } = req.params;
-  
-    if (!story_id) {
-      return res.status(400).send('Story ID is required'); // error status message if no id is provided
-      console.log("story ID is required")
-    }
-  
-    try {
-      // Delete the story (cascade will handle pages and content)
-      const [result] = await db.query(
-        'DELETE FROM stories WHERE story_id = ?', //delete the story
-        [story_id]
-      );
-  
-      if (result.affectedRows === 0) {
-        return res.status(404).send('Story not found'); // story not found error message
-        console.log("story not found")
-      } 
-  
-      res.status(200).send('Story and associated data deleted successfully'); // success status message
-      console.log("story and data deleted")
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Error deleting story'); //error status message
-      console.log("error deleting story")
-    }
-  }); 
-  
 module.exports = app;
