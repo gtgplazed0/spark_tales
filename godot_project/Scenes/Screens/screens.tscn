@@ -19,21 +19,18 @@ grow_vertical = 2
 script = ExtResource("1_oeuaq")
 
 [node name="LevelController" parent="." instance=ExtResource("2_qq5if")]
-visible = false
 layout_mode = 1
 
 [node name="TitleScene" parent="." instance=ExtResource("2_p8ijn")]
 layout_mode = 1
 
 [node name="StoriesScreen" parent="." instance=ExtResource("3_e8l5k")]
-visible = false
 layout_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="LevelParent" type="Node" parent="."]
 
 [node name="ParentLoginScreen" parent="." instance=ExtResource("2_aysa1")]
-visible = false
 layout_mode = 1
 
 [node name="SettingsScreen" parent="." instance=ExtResource("6_ceklq")]

@@ -1,11 +1,11 @@
 extends Node
 # Declare the HTTPRequest variable
 var http_request : HTTPRequest
-var user_id = 1 # id of the current user, is set to one if user is a guest
-var text_and_image_from_save = null
-var texture
+var user_id = 4 # id of the current user, is set to one if user is a guest
+var text_url_extention_from_save = {"text":null, "url":null, "ext": null, "worked": false}
+var texture_from_get_image = false
+var extention
 var sign_up_worked = 1 #flag value checking sign up
-var got_image_extension
 # -1 = failed,  1 = worked,  -2 = user already exists,   -3 = user_id not found,  -4 = bad user or pass  
 const BASE_URL = "https://compsciia-production.up.railway.app/" # base of the API's url
 
@@ -333,49 +333,57 @@ func get_page_modifications(user_id:int, page_name:String):
 	var headers = ["Content-Type: application/json"]
 	http_request.request(url, headers, HTTPClient.METHOD_GET)
 	await http_request.request_completed
-	return text_and_image_from_save
-	
+	return text_url_extention_from_save
+
 func _on_get_page_modifications(result, response_code, headers, body):
 	if response_code == 200:
 			var json = JSON.parse_string(body.get_string_from_utf8())
 			if json:
 				# Set text content and url
 				var text = json["text_content"]
+				text_url_extention_from_save["text"] = text
 				var image_url = json["image_url"]
-				got_image_extension = json["ext"]
-				await get_image(image_url)
-				var image = texture
-				text_and_image_from_save = {"text":text, "image":image}
-				print("text_and_image: " + str(text_and_image_from_save))
+				text_url_extention_from_save["url"] = image_url
+				var extention = json["ext"]
+				text_url_extention_from_save["ext"] = extention
+				text_url_extention_from_save["worked"] = true
 	else:
 		print("Error fetching data, response code:", response_code)
+		text_url_extention_from_save["worked"] = false
 		
 		
-func get_image(image_url):
+func get_image(image_url, ext):
+	text_url_extention_from_save["worked"] = true
+	extention = ext
 	http_request = new_http("_on_get_image_request_completed")
-	var err = http_request.get(image_url)
+	var headers = []
+	var err = http_request.request(image_url, headers ,HTTPClient.METHOD_GET)
 	if err != OK:
 		print("Error making request: ", err)
+		text_url_extention_from_save["worked"] = false
 	await http_request.request_completed
-	return texture
+	return texture_from_get_image
 	
 
 func _on_get_image_request_completed(result, response_code, headers, body):
 	if response_code == 200:
-		var err
-		# Success! The 'body' variable contains the image data.
-		# Option 1: Load the image directly into a Texture
+		text_url_extention_from_save["worked"] = true
 		var image = Image.new()
-		if got_image_extension == "png":
-			err = image.load_png_from_buffer(body) # Or load_jpg_from_buffer, etc.
-		elif got_image_extension == "jpeg" || got_image_extension == "jpg":
-			err = image.load_jpg_from_buffer(body) # Or load_jpg_from_buffer, etc.
-		if err == OK:
-			texture = ImageTexture.new()
-			texture = texture.create_from_image(image)
+		var error
+		if extention == ".png":
+			error = image.load_png_from_buffer(body)
+		elif extention == ".jpeg" or extention == ".jpg":
+			error = image.load_jpg_from_buffer(body)
 		else:
-			print("Error loading image from buffer:", err)
+			error = image.load_png_from_buffer(body)
+		if error != OK:
+			print(error);
+			text_url_extention_from_save["worked"] = false
+		else:
+			texture_from_get_image = ImageTexture.create_from_image(image)
 	else:
 		print("Request failed: ", response_code)
 		print("Headers: ", headers) # Print headers for debugging
 		print("Body: ", body)       # Print body for debugging
+		text_url_extention_from_save["worked"] = false
+		

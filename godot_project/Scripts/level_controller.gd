@@ -1,4 +1,5 @@
 extends Control
+@onready var file_dialoge = $FileDialog
 var page = ""
 var level_type
 signal return_signal
@@ -13,6 +14,7 @@ var page_instance
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
+	
 func start_level(level_number_param, editing_param):
 	level_number = level_number_param
 	editing = editing_param
@@ -28,8 +30,8 @@ func first_page(level_number):
 		page_instance.name = story_name
 		add_child(page_instance)
 		connect_signals(page_instance)
-		page_instance.editing = editing
 		page_instance.user_id = DataScript.user_id
+		page_instance.editing = editing
 		page_instance.is_editing()
 		print("firstedit")
 func next_page():
@@ -60,7 +62,8 @@ func return_page():
 		
 func clear_level():
 	for child in get_children():
-		child.queue_free()
+		if child.name != "LevelControllerBackground" or child.name != "FileDialog":
+			child.queue_free()
 
 func load_scene(page_name, level_number):
 	var path = PAGE_FOLDER_PATH + "Story" + str(level_number) + "/" + str(page_name) + ".tscn"
@@ -83,6 +86,7 @@ func connect_signals(page_instance):
 		page_instance.return_clicked.connect(return_page)
 		page_instance.finished_clicked.connect(finished_story)
 		page_instance.answer.connect(on_answer)
+		page_instance.image_clicked.connect(_on_image_clicked)
 		
 func now_editing():
 	editing = true
@@ -102,6 +106,12 @@ func page_handling(add_or_sub):
 		clear_level()
 		add_child(page_instance)
 		connect_signals(page_instance)
+		page_instance.user_id = DataScript.user_id
 		page_instance.editing = editing
 		page_instance.user_id = DataScript.user_id
 		page_instance.is_editing()
+func _on_image_clicked():
+	if editing == true:
+		file_dialoge.popup()
+		print(page_instance.page_image)
+		file_dialoge.image_holder = page_instance.page_image

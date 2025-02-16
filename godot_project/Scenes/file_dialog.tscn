@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://2vninulwpx68"]
+
+[ext_resource type="Script" path="res://Scripts/file_dialogue.gd" id="1_i7ckp"]
+
+[node name="FileDialog" type="FileDialog"]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(554, 450)
+ok_button_text = "Open Image"
+dialog_hide_on_ok = true
+file_mode = 0
+access = 2
+show_hidden_files = true
+use_native_dialog = true
+script = ExtResource("1_i7ckp")
+
+[connection signal="file_selected" from="." to="." method="_on_file_selected"]

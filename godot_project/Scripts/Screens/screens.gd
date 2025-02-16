@@ -13,7 +13,6 @@ class_name ScreenController
 var level_number = ""
 var current_screen = null
 var editing = false
-
 func _ready():
 	register_buttons()
 	initialize_screens()

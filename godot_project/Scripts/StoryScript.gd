@@ -7,7 +7,7 @@ var page_image = null
 var story_num = 0
 var timer_finished = true
 var y_or_n_clicked = false
-var editing = false
+var editing = false # false
 var user_id = 1
 var text_edit: TextEdit
 var self_path
@@ -16,11 +16,12 @@ signal next_clicked
 signal return_clicked
 signal previous_clicked
 signal finished_clicked(editing)
+signal image_clicked
 func _ready():
+	await page_setup()
 	set_process_unhandled_input(true)
 	print(name)
 	button_set_up()
-	page_setup()
 	if page_text != null:
 			TextToSpeech.speak_text(get_text_content())
 	get_image_content()
@@ -76,6 +77,7 @@ func buttons_pressed_handling(signal_to_emit, emit_param):
 	else:
 		signal_to_emit.emit()
 func page_setup():
+	user_id = DataScript.user_id
 	for child in get_children():
 		match child.name:
 			"PageText":
@@ -85,7 +87,9 @@ func page_setup():
 			"Popup":
 				popup = child
 				popup.visible = false
-	if user_id == 1:
+	story_num = get_story_num()
+	if int(user_id)  == 1:
+		print("The user id is being setup as guest: " + str(user_id))
 		var save_path = "user://TextModification" + str(name) + ".txt"
 		if FileAccess.file_exists(save_path):
 			print("file exists")
@@ -94,11 +98,18 @@ func page_setup():
 				var stored_text = file.get_var()
 				file.close()
 				page_text.text = stored_text
+	else:
+		print("the User id is being setup as " + str(user_id))
+		var text_url_and_ext = await DataScript.get_page_modifications(user_id, name)
+		if text_url_and_ext["worked"] == true:
+			print(text_url_and_ext["text"])
+			page_text.text = text_url_and_ext["text"]
+			var url = text_url_and_ext["url"]
+			var extention = text_url_and_ext["ext"]
+			var texture = await DataScript.get_image(url, extention)
+			page_image.texture = texture
 		else:
-			var text_and_image = await DataScript.get_page_modifications(user_id, name)
-			page_text.text = text_and_image["text"]
-	story_num = get_story_num()
-
+			print("unable to get page modifications. No modifications or error.")
 func get_text_content():
 	if page_text != null:
 		return page_text.text
@@ -170,18 +181,33 @@ func save_page():
 	if int(user_id) == 1:
 		print("it is editing her")
 		#save to file system or update if already there
-		var save_path = "user://TextModification" + str(name) + ".txt"
+		var save_path_base = "user://TextModification"
 		# Now open the file for writing
-		var file = FileAccess.open(save_path, FileAccess.WRITE)
+		var file = FileAccess.open((save_path_base + str(name) + ".txt"), FileAccess.WRITE)
 		if file:
 			file.store_var(page_text.text)
 		else:
 			print("Failed to open file! Error code: " + str(FileAccess.get_open_error()))
 			print(file.get_path())
-			print("file opened at " + str(save_path))
+			print("file opened at " + str(save_path_base + str(name) + ".txt"))
+			var stored_text = page_text.text
+			file.store_var(stored_text)
+			file.close()
+		var extension 
+		file = FileAccess.open((save_path_base + str(name) + "."), FileAccess.WRITE)
+		if file:
+			file.store_var(page_text.text)
+		else:
+			print("Failed to open file! Error code: " + str(FileAccess.get_open_error()))
+			print(file.get_path())
+			print("file opened at " + str(save_path_base + str(name) + ".txt"))
 			var stored_text = page_text.text
 			file.store_var(stored_text)
 			file.close()
 	else:
 		var image = get_image_content()
 		DataScript.send_page(user_id, name, page_text.text, image)
+
+
+func _on_texture_button_pressed() -> void:
+	image_clicked.emit()

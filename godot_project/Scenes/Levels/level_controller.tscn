@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://h335he0frfgh"]
+[gd_scene load_steps=3 format=3 uid="uid://h335he0frfgh"]
 
 [ext_resource type="Script" path="res://Scripts/level_controller.gd" id="1_1dj8v"]
+[ext_resource type="PackedScene" uid="uid://2vninulwpx68" path="res://Scenes/file_dialog.tscn" id="2_w8tb8"]
 
 [node name="LevelController" type="Control" groups=["editable"]]
 layout_mode = 3
@@ -10,3 +11,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_1dj8v")
+
+[node name="FileDialog" parent="." instance=ExtResource("2_w8tb8")]
+ok_button_text = "Open"
