@@ -227,7 +227,7 @@ app.get('/get-save', async (req, res) => {
 			Key: fileKey,
 			Expires: 300, // Link expires in 300 seconds (5 minutes)
 		});
-		res.json({ text_content: rows[0].text_content, image_url: signedUrl, ext: extension});
+		res.status(200).json({ text_content: rows[0].text_content, image_url: signedUrl, ext: extension});
   } catch (err){
     console.error("Error:", err);
 		res.status(500).json({ error: "Server error" });
@@ -307,7 +307,7 @@ app.get('/get-stickers', async (req, res) => {
       };
     });
   // Send the array of stickers
-  res.json({ stickers });
+  res.status(200).json({ stickers });
 
   } catch (err){
     console.error("Error:", err);

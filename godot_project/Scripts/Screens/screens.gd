@@ -107,6 +107,7 @@ func extract_number(button_name):
 func _on_new_log_in():
 	PARENT_LOGIN_SCREEN.logged_in = true
 	PARENT_LOGIN_SCREEN.open_screens()
+	PROGRESS_SCREEN.get_stickers()
 	print(PARENT_LOGIN_SCREEN.user_id)
 
 func _on_start_editing():
