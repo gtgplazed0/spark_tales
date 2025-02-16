@@ -175,6 +175,7 @@ app.post("/upload", upload.single("image"), async (req, res) => {
 
 		// Upload image to S3
 		const fileName = `${Date.now()}_${req.file.originalname}`;
+    console.log(req.file.originalname)
 		const params = {
 			Bucket: "spark-tales-s3-bucket",
 			Key: fileName,

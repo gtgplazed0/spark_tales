@@ -32,7 +32,7 @@ func first_page(level_number):
 		connect_signals(page_instance)
 		page_instance.user_id = DataScript.user_id
 		page_instance.editing = editing
-		page_instance.is_editing()
+		page_instance.editing_setup()
 		print("firstedit")
 func next_page():
 	if editing:
@@ -62,7 +62,7 @@ func return_page():
 		
 func clear_level():
 	for child in get_children():
-		if child.name != "LevelControllerBackground" or child.name != "FileDialog":
+		if child.name != "FileDialog":
 			child.queue_free()
 
 func load_scene(page_name, level_number):
@@ -87,7 +87,6 @@ func connect_signals(page_instance):
 		page_instance.finished_clicked.connect(finished_story)
 		page_instance.answer.connect(on_answer)
 		page_instance.image_clicked.connect(_on_image_clicked)
-		
 func now_editing():
 	editing = true
 func stop_editing():
@@ -109,7 +108,7 @@ func page_handling(add_or_sub):
 		page_instance.user_id = DataScript.user_id
 		page_instance.editing = editing
 		page_instance.user_id = DataScript.user_id
-		page_instance.is_editing()
+		page_instance.editing_setup()
 func _on_image_clicked():
 	if editing == true:
 		file_dialoge.popup()

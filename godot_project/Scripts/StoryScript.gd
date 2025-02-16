@@ -1,5 +1,4 @@
 extends Control
-
 var return_button = null
 var popup = null
 var page_text = null
@@ -8,9 +7,10 @@ var story_num = 0
 var timer_finished = true
 var y_or_n_clicked = false
 var editing = false # false
-var user_id = 1
+var user_id = DataScript.user_id
 var text_edit: TextEdit
 var self_path
+var save_edit_button
 signal answer(correct_or_incorrect)
 signal next_clicked
 signal return_clicked
@@ -42,22 +42,15 @@ func button_set_up():
 					child.clicked.connect(_on_yes_or_no)
 
 func _on_next_clicked(_button):
-	print(editing)
-	if editing:
-		save_page()
 	buttons_pressed_handling(next_clicked, null)
-	
+
 func _on_return_clicked(_button):
 	buttons_pressed_handling(return_clicked, null)
 	
 func _on_previous_clicked(_button):
-	if editing:
-		save_page()
 	buttons_pressed_handling(previous_clicked, null)
 	
 func _on_finished_clicked(_self):
-	if editing == true:
-		save_page()
 	buttons_pressed_handling(finished_clicked, editing)
 	
 func _on_yes_or_no(yes_or_no):
@@ -87,17 +80,29 @@ func page_setup():
 			"Popup":
 				popup = child
 				popup.visible = false
+			"SaveEditButton":
+				save_edit_button = child
+				save_edit_button.visible = false
 	story_num = get_story_num()
 	if int(user_id)  == 1:
 		print("The user id is being setup as guest: " + str(user_id))
-		var save_path = "user://TextModification" + str(name) + ".txt"
-		if FileAccess.file_exists(save_path):
+		if FileAccess.file_exists("user://TextModification" + str(name) + ".txt"):
 			print("file exists")
-			var file = FileAccess.open(save_path, FileAccess.READ)
+			var file = FileAccess.open("user://TextModification" + str(name) + ".txt", FileAccess.READ)
 			if file:
 				var stored_text = file.get_var()
 				file.close()
 				page_text.text = stored_text
+		if FileAccess.file_exists("user://ImageModification" + str(name) + ".png"):
+			print("image file exists")
+			var image = Image.new()
+			image.load("user://ImageModification" + str(name) + ".png")
+			var texture = ImageTexture.new()
+			texture.set_image(image)
+			print(texture)
+			if texture:
+				print("texture worked")
+				page_image.texture = texture
 	else:
 		print("the User id is being setup as " + str(user_id))
 		var text_url_and_ext = await DataScript.get_page_modifications(user_id, name)
@@ -107,7 +112,8 @@ func page_setup():
 			var url = text_url_and_ext["url"]
 			var extention = text_url_and_ext["ext"]
 			var texture = await DataScript.get_image(url, extention)
-			page_image.texture = texture
+			if DataScript.get_image_worked == true:
+				page_image.texture = texture
 		else:
 			print("unable to get page modifications. No modifications or error.")
 func get_text_content():
@@ -145,12 +151,7 @@ func _on_popup_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			popup.visible = false
-			
-func is_editing():
-	if editing == true:
-		editing_setup()
-		
-func editing_setup():
+func show_text_edit():
 	if page_text != null:
 		text_edit = TextEdit.new()  # Holds the dynamically created TextEdit
 		text_edit.size = page_text.size
@@ -160,6 +161,10 @@ func editing_setup():
 		move_child(text_edit, 2)
 		text_edit.show()
 		page_text.hide()
+func editing_setup():
+	if editing:
+		save_edit_button.visible = true
+		
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
@@ -168,7 +173,7 @@ func _on_gui_input(event: InputEvent) -> void:
 				if text_edit.get_global_rect().has_point(event.position):
 					print("on text edit")
 				else:
-					save_page()
+					editing_takedown()
 func editing_takedown():
 	if text_edit:
 		page_text.text = text_edit.text
@@ -176,38 +181,26 @@ func editing_takedown():
 		text_edit.queue_free()  # Remove TextEdit from scene
 		text_edit = null  # Reset reference
 func save_page():
-	print(user_id)
-	editing_takedown()
 	if int(user_id) == 1:
-		print("it is editing her")
-		#save to file system or update if already there
-		var save_path_base = "user://TextModification"
-		# Now open the file for writing
-		var file = FileAccess.open((save_path_base + str(name) + ".txt"), FileAccess.WRITE)
-		if file:
-			file.store_var(page_text.text)
+		var file_text = FileAccess.open(("user://TextModification" + str(name) + ".txt"), FileAccess.WRITE)
+		var image: Image = page_image.texture.get_image()
+		var extension = page_image.texture.resource_path.get_extension()
+		print(extension)
+		if file_text:
+			file_text.store_var(page_text.text)
 		else:
 			print("Failed to open file! Error code: " + str(FileAccess.get_open_error()))
-			print(file.get_path())
-			print("file opened at " + str(save_path_base + str(name) + ".txt"))
-			var stored_text = page_text.text
-			file.store_var(stored_text)
-			file.close()
-		var extension 
-		file = FileAccess.open((save_path_base + str(name) + "."), FileAccess.WRITE)
-		if file:
-			file.store_var(page_text.text)
-		else:
-			print("Failed to open file! Error code: " + str(FileAccess.get_open_error()))
-			print(file.get_path())
-			print("file opened at " + str(save_path_base + str(name) + ".txt"))
-			var stored_text = page_text.text
-			file.store_var(stored_text)
-			file.close()
+		file_text.close()
+		if image:
+				image.save_png("user://ImageModification" + str(name) + ".png")
 	else:
 		var image = get_image_content()
 		DataScript.send_page(user_id, name, page_text.text, image)
-
-
-func _on_texture_button_pressed() -> void:
+func _on_page_image_edit_button_pressed() -> void:
 	image_clicked.emit()
+func _on_page_text_edit_button_pressed() -> void:
+	if editing:
+		show_text_edit()
+func _on_save_edit_button_pressed() -> void:
+	editing_takedown()
+	save_page()

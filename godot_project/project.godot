@@ -25,6 +25,7 @@ Passwords="*res://Scripts/passwords.gd"
 SoundFx="*res://Scenes/sound_fx.tscn"
 TextToSpeech="*res://Scenes/text_to_speech.tscn"
 FileOpener="*res://Scripts/file_dialogue.gd"
+DataScript="*res://Scripts/data_script.gd"
 
 [debug]
 

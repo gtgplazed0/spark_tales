@@ -102,7 +102,7 @@ func _on_login_button_pressed() -> void:
 func _on_log_out_button_pressed() -> void:
 	SoundFx.play("click")
 	#add saving data and load up guest items
-	DataScript.user_id = 1
+	DataScript.user_id = 0
 	logged_in = false
 	log_out.emit()
 	
@@ -121,3 +121,15 @@ func now_editing():
 
 func _on_stop_edit_button_pressed() -> void:
 	stop_editing.emit()
+
+
+func _on_guest_pressed() -> void:
+	SoundFx.play("click")
+	var sign_in_worked = await DataScript.login("guest", "GuestPassword123")
+	if sign_in_worked == -1:
+		print("Error. Log in did not work. Please try again")
+	elif sign_in_worked == -4:
+		print("Error. Log in did not work. Please try again")
+	else:
+		new_logged_in.emit()
+		logged_in = true

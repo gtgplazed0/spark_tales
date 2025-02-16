@@ -1,8 +1,9 @@
 extends Node
 # Declare the HTTPRequest variable
 var http_request : HTTPRequest
-var user_id = 4 # id of the current user, is set to one if user is a guest
+var user_id = 0 # id of the current user, is set to 0 for no log in, 1 if user is a guest
 var text_url_extention_from_save = {"text":null, "url":null, "ext": null, "worked": false}
+var get_image_worked = false
 var texture_from_get_image = false
 var extention
 var sign_up_worked = 1 #flag value checking sign up
@@ -30,7 +31,7 @@ func upload_user(username: String, salt: String, hashed_password: String): # upl
 	var error = http_request.request(url, headers, HTTPClient.METHOD_POST, json_data)
 	if error != OK: # if there is an error
 		print("Error sending request: %s" % error)  # Log error if the request fails
-		user_id = 1 # keep user as guest and use the sign_up-worked flag 
+		user_id = 0 # keep user as guest and use the sign_up-worked flag 
 		sign_up_worked = -1
 	await http_request.request_completed # wait for a repsonse, and return if it worked
 	return sign_up_worked
@@ -54,14 +55,14 @@ func _on_upload_user_request_completed(_result, response_code, _headers, body): 
 		else:
 			print("Error parsing response JSON: %d" % error)  # Log the error code
 			sign_up_worked = -1
-			user_id = 1
+			user_id = 0
 	elif response_code == 409: # user exists error code
 		print("User Already Exists. Response code: %d" % response_code)  # Log failure with response code
-		user_id = 1 # keep as guest and show sign up didn't work
+		user_id = 0 # keep as guest and show sign up didn't work
 		sign_up_worked = -2
 	else:
 		print("Error. Response code: %d" % response_code)	
-		user_id = 1 # keep as guest and show sign up didn't work 
+		user_id = 0 # keep as guest and show sign up didn't work 
 		sign_up_worked = -1
 
 func login(username: String, password: String): # log in user http reuqest
@@ -353,21 +354,22 @@ func _on_get_page_modifications(result, response_code, headers, body):
 		
 		
 func get_image(image_url, ext):
-	text_url_extention_from_save["worked"] = true
+	get_image_worked = true
 	extention = ext
 	http_request = new_http("_on_get_image_request_completed")
 	var headers = []
 	var err = http_request.request(image_url, headers ,HTTPClient.METHOD_GET)
 	if err != OK:
 		print("Error making request: ", err)
-		text_url_extention_from_save["worked"] = false
+		get_image_worked = false
 	await http_request.request_completed
 	return texture_from_get_image
 	
 
 func _on_get_image_request_completed(result, response_code, headers, body):
 	if response_code == 200:
-		text_url_extention_from_save["worked"] = true
+		print("getting an image worked")
+		get_image_worked = true
 		var image = Image.new()
 		var error
 		if extention == ".png":
@@ -378,12 +380,13 @@ func _on_get_image_request_completed(result, response_code, headers, body):
 			error = image.load_png_from_buffer(body)
 		if error != OK:
 			print(error);
-			text_url_extention_from_save["worked"] = false
+			get_image_worked = false
 		else:
 			texture_from_get_image = ImageTexture.create_from_image(image)
+			get_image_worked = true
 	else:
 		print("Request failed: ", response_code)
 		print("Headers: ", headers) # Print headers for debugging
 		print("Body: ", body)       # Print body for debugging
-		text_url_extention_from_save["worked"] = false
+		get_image_worked = false
 		
