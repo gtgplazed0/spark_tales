@@ -1,8 +1,8 @@
 extends Control
 var return_button = null
 var popup = null
-var page_text = null
-var page_image = null
+var page_text: Label
+var page_image: TextureRect
 var image_path = null
 var story_num = 0
 var timer_finished = true
@@ -12,6 +12,7 @@ var user_id = DataScript.user_id
 var text_edit: TextEdit
 var self_path
 var save_edit_button
+var text_size
 signal answer(correct_or_incorrect)
 signal next_clicked
 signal return_clicked
@@ -76,6 +77,7 @@ func page_setup():
 		match child.name:
 			"PageText":
 				page_text = child
+				page_text.label_settings.font_size = text_size
 			"PageImage":
 				page_image =  child
 			"Popup":

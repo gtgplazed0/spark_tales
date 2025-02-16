@@ -202,6 +202,10 @@ theme_override_icons/grabber_disabled = ExtResource("7_mni8v")
 theme_override_styles/slider = SubResource("StyleBoxLine_hcr6v")
 theme_override_styles/grabber_area = SubResource("StyleBoxLine_4h1y1")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_gvi60")
+min_value = 50.0
+max_value = 160.0
+step = 0.5
+value = 50.0
 
 [node name="TextToSpeechBox" type="Label" parent="SettingsTexture"]
 layout_mode = 0
@@ -223,4 +227,6 @@ texture_pressed = ExtResource("9_n1s4r")
 ignore_texture_size = true
 stretch_mode = 4
 
+[connection signal="drag_ended" from="SettingsTexture/TextSizeLabel/TextSizeSlider" to="." method="_on_text_size_slider_drag_ended"]
+[connection signal="value_changed" from="SettingsTexture/TextSizeLabel/TextSizeSlider" to="." method="_on_text_size_slider_value_changed"]
 [connection signal="pressed" from="SettingsTexture/TextToSpeechBox/TextToSpeechButton" to="." method="_on_texture_button_pressed"]

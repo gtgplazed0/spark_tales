@@ -14,7 +14,6 @@ func create_sticker_textures():
 	stickercontnum += 1
 	sticker_container.name = "sticker_container_" + str(stickercontnum)
 	sticker_container.add_to_group("sticker_holder")
-	print(sticker_container.name)
 	STICKER_GRID.add_child(sticker_container)
 func create_sticker_array():
 	var directory_path = "res://Stickers/"
@@ -53,4 +52,3 @@ func new_sticker():
 	
 func now_editing():
 	editing = true
-	print(str(name)+ " is now editing and editing = " + str(editing))

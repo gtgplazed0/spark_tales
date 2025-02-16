@@ -118,7 +118,6 @@ func generate_multipart_data(data, boundary): # creates the multipart form data 
 	for key in data.keys(): # for each key in the data dictionary
 		var value = data[key] # get the items relating to the key
 		if key == "image":
-			print("value: " + str(value))
 			var mime_type = value.get_extension() # get the image extention as png
 			print("mime_type: " + mime_type)
 			line = "--" + boundary + "\r\n" # open the image section of the form
@@ -165,7 +164,6 @@ func send_page(user_id: int, page_name: String, text_content: String, image):
 func _on_send_page_request_completed(result, response_code, headers, body): # when upload story request completed
 	if response_code == 200: # successfull error code
 		print("Request Succeded")
-		print(str(body))
 	else: # error with request
 		print("Request Failed with response code: ", response_code)
 
@@ -186,7 +184,6 @@ func _on_get_page_modifications(result, response_code, headers, body):
 				text_url_from_save["text"] = text
 				var image_url = json["image_url"]
 				extension_from_save = json["ext"]
-				print(extension_from_save)
 				text_url_from_save["url"] = image_url
 				text_url_from_save["worked"] = true
 	else:
@@ -203,13 +200,11 @@ func get_image(image_url, ext):
 		print("Error making request: ", err)
 		get_image_worked = false
 	await http_request.request_completed
-	print("Texture from get image: " + str(texture_from_get_image))
 	return texture_from_get_image
 	
 
 func _on_get_image_request_completed(result, response_code, headers, body):
 	if response_code == 200:
-		print("getting an image worked: " + str(body))
 		get_image_worked = true
 		var image = Image.new()
 		var error

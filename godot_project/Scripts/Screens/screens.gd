@@ -29,6 +29,7 @@ func initialize_screens():
 	PARENT_LOGIN_SCREEN.start_editing.connect(_on_start_editing)
 	PARENT_LOGIN_SCREEN.log_out.connect(_on_log_out)
 	PARENT_LOGIN_SCREEN.stop_editing.connect(_on_stop_editing)
+	SETTING_SCREEN.text_size_signal.connect(_on_text_size_changed)
 	
 func register_buttons():
 	# Register buttons and connect their signals
@@ -139,4 +140,7 @@ func _on_log_out():
 	PARENT_LOGIN_SCREEN.logged_in = false
 	#make sure to stop editing on log out, and save evrything. 
 	PARENT_LOGIN_SCREEN.open_screens()
+	
+func _on_text_size_changed(new_text_size):
+	LEVEL_CONTROLLER.text_size = new_text_size
 

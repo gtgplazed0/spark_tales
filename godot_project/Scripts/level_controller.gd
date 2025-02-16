@@ -11,6 +11,7 @@ var correct_answer_to_pass = true
 var editing = false
 var level_number
 var page_instance
+var text_size = 100
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -28,12 +29,13 @@ func first_page(level_number):
 	if page_instance != null:
 		correct_answer_to_pass = true
 		page_instance.name = story_name
+		page_instance.text_size = text_size
 		add_child(page_instance)
 		connect_signals(page_instance)
 		page_instance.user_id = DataScript.user_id
 		page_instance.editing = editing
+		
 		page_instance.editing_setup()
-		print("firstedit")
 func next_page():
 	if editing:
 		correct_answer_to_pass = true
@@ -98,11 +100,11 @@ func page_handling(add_or_sub):
 	var find_match = page.rfind("P")
 	var find_name = story_name.rfind("P")
 	story_name[find_name+1] = str(int(story_name[find_name+1]) + add_or_sub)
-	print(page)
 	page_instance = load_scene(story_name, level_number)
 	page_instance.name = story_name
 	if page_instance != null:
 		clear_level()
+		page_instance.text_size = text_size
 		add_child(page_instance)
 		connect_signals(page_instance)
 		page_instance.user_id = DataScript.user_id
@@ -112,7 +114,6 @@ func page_handling(add_or_sub):
 func _on_image_clicked():
 	if editing == true:
 		file_dialoge.popup()
-		print(page_instance.page_image)
 		file_dialoge.image_holder = page_instance.page_image
 		await file_dialoge.path_gotten
 		page_instance.image_path = file_dialoge.image_path

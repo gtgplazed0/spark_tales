@@ -15,6 +15,5 @@ func _on_file_selected(path: String) -> void:
 		texture.set_image(image)
 		if image_holder != null:
 			image_holder.texture = texture
-		print(texture)
 	else:
 		print("not an image")

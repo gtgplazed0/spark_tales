@@ -233,4 +233,85 @@ app.get('/get-save', async (req, res) => {
 		res.status(500).json({ error: "Server error" });
   }
 });
+
+
+
+//testing sticker code
+
+
+
+
+// Endpoint to handle story modifications upload
+app.post("/upload-sticker", upload.single("image"), async (req, res) => {
+	try {
+		const { user_id} = req.body;
+		if (!user_id || !req.file) {
+      console.log("Missing required fields")
+			return res.status(400).json({ error: "Missing required fields" });
+		}
+
+		// Upload image to S3
+		const fileName = `${Date.now()}_${req.file.originalname}`;
+    console.log(req.file.originalname)
+		const params = {
+			Bucket: "spark-tales-s3-bucket",
+			Key: fileName,
+			Body: req.file.buffer,
+			ContentType: req.file.mimetype,
+		};
+
+		const uploadResult = await s3.upload(params).promise();
+		const sticker_url = uploadResult.Location; // S3 File URL
+
+		// Save details to the database
+		const sql = `INSERT INTO stickers (user_id, sticker_url) VALUES (?, ?, ?)`;
+		await db.execute(sql, [user_id, sticker_url]);
+
+		// Response
+		res.status(200).json({ success: true }); // success status message
+	} catch (err) {
+		console.error("Error:", err);
+		res.status(500).json({ error: "Server error" });
+	}
+});
+
+app.get('/get-stickers', async (req, res) => {
+  try{
+    const {user_id} = req.query;
+    if (!user_id) {
+      return res.status(400).json({error: "Incorrect data. Needs user_id"})
+    }
+    const sql = "Select sticker_url FROM stickers WHERE user_id = ?";
+    const [rows] = await db.execute(sql, [user_id]);
+		if (rows.length === 0) {
+			return res.status(404).json({ error: "stickers not found" });
+		}
+   // Create an array of sticker URLs with signed URLs
+    const stickers = rows.map(row => {
+      const image_url = row.sticker_url;
+      const extension = path.extname(image_url);
+      
+      // Extract S3 file key from URL
+      const fileKey = image_url.split("/").pop();
+
+      // Generate a signed URL (valid for 5 minutes)
+      const signedUrl = s3.getSignedUrl("getObject", {
+        Bucket: "spark-tales-s3-bucket",
+        Key: fileKey,
+        Expires: 300, // Link expires in 300 seconds (5 minutes)
+      });
+
+      return {
+        image_url: signedUrl,
+        ext: extension,
+      };
+    });
+  // Send the array of stickers
+  res.json({ stickers });
+
+  } catch (err){
+    console.error("Error:", err);
+		res.status(500).json({ error: "Server error" });
+  }
+});
 module.exports = app;
