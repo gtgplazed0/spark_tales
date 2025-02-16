@@ -217,6 +217,7 @@ app.get('/get-save', async (req, res) => {
 		}
     const image_url = rows[0].image_url
     const extension = path.extname(image_url)
+    console.log(extension)
     // Extract S3 file key from URL
 		const fileKey = image_url.split("/").pop();
 

@@ -1,9 +1,14 @@
 extends Node
 var file_dialog = self
+var extension
+var image_path
+signal path_gotten
 @export var image_holder: TextureRect = null
-
 func _on_file_selected(path: String) -> void:
-	if path.get_extension() == "png" or path.get_extension() == "jpg" or path.get_extension() == "jpeg":
+	image_path = path
+	path_gotten.emit()
+	extension = path.get_extension()
+	if extension == "png" or extension == "jpg" or extension == "jpeg":
 		var image = Image.new()
 		image.load(path)
 		var texture = ImageTexture.new()

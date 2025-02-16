@@ -118,7 +118,8 @@ func generate_multipart_data(data, boundary): # creates the multipart form data 
 	for key in data.keys(): # for each key in the data dictionary
 		var value = data[key] # get the items relating to the key
 		if key == "image":
-			var mime_type = value.get_extention() # get the image extention as png
+			print("value: " + str(value))
+			var mime_type = value.get_extension() # get the image extention as png
 			print("mime_type: " + mime_type)
 			line = "--" + boundary + "\r\n" # open the image section of the form
 			body.append_array(line.to_utf8_buffer())
@@ -191,7 +192,6 @@ func _on_get_page_modifications(result, response_code, headers, body):
 	else:
 		print("Error fetching data, response code:", response_code)
 		text_url_from_save["worked"] = false
-		
 		
 func get_image(image_url, ext):
 	get_image_worked = true

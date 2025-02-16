@@ -114,3 +114,5 @@ func _on_image_clicked():
 		file_dialoge.popup()
 		print(page_instance.page_image)
 		file_dialoge.image_holder = page_instance.page_image
+		await file_dialoge.path_gotten
+		page_instance.image_path = file_dialoge.image_path

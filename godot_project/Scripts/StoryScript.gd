@@ -3,6 +3,7 @@ var return_button = null
 var popup = null
 var page_text = null
 var page_image = null
+var image_path = null
 var story_num = 0
 var timer_finished = true
 var y_or_n_clicked = false
@@ -122,6 +123,8 @@ func get_text_content():
 
 func get_image_content():
 	if page_image != null:
+		print("Page Image Texture = "+str(page_image.texture))
+		print("Resource path = " + page_image.texture.resource_path)
 		return page_image.texture.resource_path
 
 func get_story_num():
@@ -194,7 +197,11 @@ func save_page():
 		if image:
 				image.save_png("user://ImageModification" + str(name) + ".png")
 	else:
-		var image = get_image_content()
+		var image
+		if image_path == null:
+			image = get_image_content()
+		else:
+			image = image_path
 		DataScript.send_page(user_id, name, page_text.text, image)
 func _on_page_image_edit_button_pressed() -> void:
 	image_clicked.emit()
