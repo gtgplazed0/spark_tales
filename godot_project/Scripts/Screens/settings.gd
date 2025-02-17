@@ -1,6 +1,6 @@
 extends Control
 var TTSon = false
-var text_size = 120
+var text_size = 100
 @onready var TEXT_TO_SPEECH_BUTTON = $SettingsTexture/TextToSpeechBox/TextToSpeechButton
 @onready var TEXT_SIZE_SLIDER = $SettingsTexture/TextSizeLabel/TextSizeSlider
 signal text_size_signal(text_size)
@@ -47,6 +47,7 @@ func fade_text(label: Label) -> void:
 	tween.tween_property(label, "modulate", Color(1, 1, 1, 0), 3.0).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
 	
 func _on_text_size_slider_drag_ended(value_changed: bool) -> void:
+	
 	if value_changed:
 		text_size = TEXT_SIZE_SLIDER.value
 	text_size_signal.emit(text_size)

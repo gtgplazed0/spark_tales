@@ -20,7 +20,6 @@ func register_buttons(): # used to register all of the screen buttons
 				button.clicked.connect(_on_button_pressed)
 
 func _on_button_pressed(button): # a function that runs when a screen button is pressed, connected to thier "clicked" signal
-	SoundFx.play("click")
 	level_button_clicked.emit(button.name) # emit the name of the button
 
 func reset_scroll():

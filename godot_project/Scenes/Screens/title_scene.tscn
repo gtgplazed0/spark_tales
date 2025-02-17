@@ -108,3 +108,13 @@ texture_normal = ExtResource("11_1qw6i")
 texture_pressed = ExtResource("12_4rfpi")
 ignore_texture_size = true
 stretch_mode = 0
+
+[node name="InformationButton" parent="." instance=ExtResource("2_xujux")]
+offset_left = 1079.0
+offset_top = 7.0
+offset_right = 1174.0
+offset_bottom = 102.0
+texture_normal = ExtResource("11_1qw6i")
+texture_pressed = ExtResource("12_4rfpi")
+ignore_texture_size = true
+stretch_mode = 0

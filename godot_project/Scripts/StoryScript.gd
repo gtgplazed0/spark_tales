@@ -77,7 +77,10 @@ func page_setup():
 		match child.name:
 			"PageText":
 				page_text = child
-				page_text.label_settings.font_size = text_size
+				if name.ends_with("1"):
+					page_text.label_settings.font_size = text_size
+				else:
+					page_text.label_settings.font_size = (text_size / 2.2)
 			"PageImage":
 				page_image =  child
 			"Popup":

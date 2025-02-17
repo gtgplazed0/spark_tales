@@ -206,7 +206,6 @@ func get_image(image_url, ext):
 	await http_request.request_completed
 	return texture_from_get_image
 	
-
 func _on_get_image_request_completed(result, response_code, headers, body):
 	if response_code == 200:
 		get_image_worked = true
@@ -225,9 +224,6 @@ func _on_get_image_request_completed(result, response_code, headers, body):
 			texture_from_get_image = ImageTexture.create_from_image(image)
 			get_image_worked = true
 	else:
-		print("Request failed: ", response_code)
-		print("Headers: ", headers) # Print headers for debugging
-		print("Body: ", body)       # Print body for debugging
 		get_image_worked = false
 		
 func send_sticker(user_id, sticker):
@@ -254,6 +250,7 @@ func _on_send_sticker_request_completed(result, response_code, headers, body): #
 		print("Request Failed with response code: ", response_code)
 
 func get_stickers(user_id:int):
+	print("user_id in data scripts: " + str(user_id))
 	var url = BASE_URL + "get-stickers?user_id=" + str(user_id)
 	http_request = new_http("_on_get_stickers")
 	var headers = ["Content-Type: application/json"]
@@ -267,21 +264,16 @@ func _on_get_stickers(result, response_code, headers, body):
 	else:
 		print("Error fetching data, response code:", response_code)
 		
-		
-		
-		
-		
 func get_sticker_image(sticker_url, ext):
 	get_sticker_worked = true
 	sticker_extention = ext
-	http_request = new_http("_on_get_image_request_completed")
+	http_request = new_http("_on_get_sticker_image_request_completed")
 	var headers = []
 	var err = http_request.request(sticker_url, headers ,HTTPClient.METHOD_GET)
 	if err != OK:
 		print("Error making request: ", err)
 		get_sticker_worked = false
 	await http_request.request_completed
-	
 
 func _on_get_sticker_image_request_completed(result, response_code, headers, body):
 	if response_code == 200:
@@ -298,12 +290,10 @@ func _on_get_sticker_image_request_completed(result, response_code, headers, bod
 			print(error);
 			get_sticker_worked = false
 		else:
+			print("sticker getting worked")
 			sticker_from_get_image = ImageTexture.create_from_image(image)
 			get_sticker_worked = true
-		print("in data Script sticker= " + sticker_from_get_image)
 	else:
-		print("Request failed: ", response_code)
-		print("Headers: ", headers) # Print headers for debugging
-		print("Body: ", body)       # Print body for debugging
+		print("issue with stickers")
 		get_sticker_worked = false
 		

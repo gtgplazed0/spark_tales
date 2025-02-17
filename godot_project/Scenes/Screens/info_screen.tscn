@@ -1,0 +1,137 @@
+[gd_scene load_steps=8 format=3 uid="uid://b2jep6h03hi3w"]
+
+[ext_resource type="Texture2D" uid="uid://bvesj6vgcs4vs" path="res://Assets/Textures/SettingsBackground.png" id="1_7vblw"]
+[ext_resource type="Script" path="res://Scripts/Screens/base_screens.gd" id="1_xk4qf"]
+[ext_resource type="PackedScene" uid="uid://u8ibfy4bbtis" path="res://Scenes/Buttons/base_button.tscn" id="2_u54gw"]
+[ext_resource type="Texture2D" uid="uid://ca45oqfhygqes" path="res://Assets/Textures/Buttons/BackBTN.png" id="3_pjrf0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_42lj4"]
+font_size = 110
+font_color = Color(0.223529, 0.223529, 0.223529, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rm03x"]
+font_size = 110
+
+[sub_resource type="SystemFont" id="SystemFont_pv3sa"]
+
+[node name="InfoScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xk4qf")
+
+[node name="InfoScreenBG2" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.65098, 0.792157, 1, 0.623529)
+
+[node name="InfoScreenTexture2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -531.5
+offset_top = -366.0
+offset_right = 531.5
+offset_bottom = 366.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_7vblw")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="InfoScreenLabel" type="Label" parent="InfoScreenTexture2"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -424.0
+offset_top = -6.0
+offset_right = 425.0
+offset_bottom = 159.0
+grow_horizontal = 2
+text = "INFORMATION"
+label_settings = SubResource("LabelSettings_42lj4")
+horizontal_alignment = 1
+
+[node name="InfoScreenLabel" type="Label" parent="InfoScreenTexture2/InfoScreenLabel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -282.5
+offset_top = -7.0
+offset_right = 270.5
+offset_bottom = 161.0
+grow_horizontal = 2
+text = "INFORMATION"
+label_settings = SubResource("LabelSettings_rm03x")
+horizontal_alignment = 1
+
+[node name="InformationLabel" type="RichTextLabel" parent="InfoScreenTexture2"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 128.0
+offset_right = 1031.0
+offset_bottom = 674.0
+theme_override_colors/default_color = Color(0.991164, 0.991164, 0.991164, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = SubResource("SystemFont_pv3sa")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "Welcome to Spark Tales! Here, I will explain how to use this program.
+1. Title Screen
+	You have already been on the title screen, (the screen that 
+	you loaded in too. On this screen, there are 5 Buttons. 
+	A) The Button in the top left corner is the settings button to open the settings 
+		 screen. 
+	B) The Button in the top right corner is the Information  button, which you 
+		 pressed to get here!
+	C) Storys. This is the main button to open the story selection screen
+	D) Progress. This is where your kids can see all the stickers they have collected!
+	E) Parents. This is where you, as a parent, teacher, or  adult, can log in to save 
+		progress, or make edits to the  storys yourself!
+
+2. Settings Screen: In the settings screen, you can press and move the 3 sliders to change the musics volume, the volume of sound effects like the button click sound, and the size of the text in the stories. The text to speech button turns on a text to speech reader that will read out all the text on the screen. 
+
+3. Information Screen: Your already here! But just in case,you are not sure what this is, this screen gives you information on how to use the application! By the way, in the corner of this screen there is a big red return button with an arrow on it. Clicking this button at any point, in any area of this game, will bring you back to the previous screen, or the title screen!
+
+4. Stories Screen: This is a big one. This is where you go to play stories! When you open this screen, you will see many green level buttons. Pressing one of these will open a fun engaging story to read. Each story will have many pages with images and text (that you can edit, explained later), as well as yes, and no options to answer the questions on the page. To advance to the next page in the story, answer the question correctly. When you on the last page, click the finish story button, and you will get a cool sticker! You can always visit previous pages in the story, and you can click the return button in the top corner to go back to the story selection screen at any time!
+
+5. Progress screen: This is where all the stickers you collected are stored! Come to this page at any time to view all of the stickers you got on your reading journey!
+
+6. Parents screen: This screen is where you go to log in. Click on it, and see the three options. 
+	Option 1, New Account: Pressing this button will allow you to create your very 
+	own account! Just press it, and enter a unique user name and a password that 
+	fits the requirements, and click sign up to create 
+	your account. 
+	Option 2, Existing: Clicking this button will bring you to another log in screen. 
+	This is for when you want to log in to an acccount you have already made! Just 
+	enter your username and password, and click log in!
+	Option 3, Log in as guest: Clicking this button will log you into the guest 
+	account.
+Loggin in to an account (your own, or guest), will allow you to access the \"edit\" button. Pressing this will allow you to edit the text and images of each story. Just press the edit button, go to the story selection screen, and click the story you wish to edit. In this screen, there will now be a save button. Click on the text to open the text editor, and click anywhere off the screen to save the text. Click the image to select an image from your file system, and click anywhere to save the image. Then click the \"Save\" button to save your changes. If you are logged in as a guest, your changes will be saved to your local machine, and cannot be accessed anywhere else. If you are logged in to your own account however, You can access your changes anywhere you would like. To stop editing, go back to the parents screen, and click \"Stop editing\"
+
+There you have it. Everything you need to know! Have fun!
+"
+
+[node name="InformationBackButton2" parent="." instance=ExtResource("2_u54gw")]
+offset_left = 78.0
+offset_top = 64.0
+offset_right = 166.0
+offset_bottom = 152.0
+texture_normal = ExtResource("3_pjrf0")
+ignore_texture_size = true
+stretch_mode = 0

@@ -2,7 +2,6 @@ extends Control
 @onready var STICKER_GRID = $ScrollContainer/VBoxContainer/GridContainer
 var sticker_textures = []
 var stickercontnum = 0
-var editing = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	create_sticker_array()
@@ -19,21 +18,26 @@ func create_sticker_textures():
 	return sticker_container
 	
 func get_stickers():
-	await DataScript.get_stickers(DataScript.user_id)
-	var stickers = DataScript.stickers_gotten
-	if stickers != null:
-		for sticker in stickers["stickers"]:
+	if DataScript.user_id != 0 or DataScript.user_id != 1:
+		await DataScript.get_stickers(DataScript.user_id)
+		var stickers = DataScript.stickers_gotten
+		if stickers != null:
+			for sticker in stickers["stickers"]:
+				var container = create_sticker_textures()
+				await DataScript.get_sticker_image(sticker["image_url"], sticker["ext"])
+				var sticker_texture = DataScript.sticker_from_get_image
+				print("sticker texture: " + str(sticker_texture))
+				if DataScript.get_sticker_worked == true:
+					print("get stickers worked")
+					for child in STICKER_GRID.get_children():
+						if child.is_in_group("sticker_holder"):
+							if child.texture == null:
+									child.texture = sticker_texture
+	else:
+		var stickers = get_all_stickers()
+		for sticker in stickers:
 			var container = create_sticker_textures()
-			await DataScript.get_sticker_image(sticker["image_url"], sticker["ext"])
-			var sticker_texture = DataScript.sticker_from_get_image
-			print("sticker texture: " + str(sticker_texture))
-			if DataScript.get_sticker_worked == true:
-				print("get stickers worked")
-				for child in STICKER_GRID.get_children():
-					if child.is_in_group("sticker_holder"):
-						if child.texture == null:
-								child.texture = sticker_texture
-				
+			container.texture = sticker
 func create_sticker_array():
 	var directory_path = "res://Stickers/"
 	var sticker_directory = DirAccess.open(directory_path)
@@ -65,12 +69,34 @@ func new_sticker():
 					var _new_sticker = sticker_textures.pick_random()
 					print(str(_new_sticker.get))
 					child.texture = _new_sticker
-					var path = child.texture.resource_path 
-					DataScript.send_sticker(DataScript.user_id, path)
+					if DataScript.user_id != 0 or DataScript.user_id != 1:
+						var path = child.texture.resource_path 
+						DataScript.send_sticker(DataScript.user_id, path)
+					elif DataScript.user_id == 1:
+						var image: Image = child.texture.get_image()
+						var extension = child.texture.resource_path.get_extension()
+						print(extension)
+						if image:
+								image.save_png("user://Sticker" + str(child.name) + ".png")
 					return _new_sticker
 				else:
 					print("There are no stickers")
 					return
-	
-func now_editing():
-	editing = true
+func get_all_stickers() -> Array:
+	var stickers := []
+	var dir := DirAccess.open("user://")
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if file_name.ends_with(".png") and file_name.begins_with("Sticker"):
+				var image = Image.new()
+				var err = image.load("user://" + file_name)
+				var texture = ImageTexture.new()
+				texture.create_from_image(image)
+				stickers.append(texture)
+			file_name = dir.get_next()
+		dir.list_dir_end()
+	else:
+		print("Failed to open user directory")
+	return stickers

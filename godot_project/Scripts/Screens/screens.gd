@@ -9,6 +9,8 @@ class_name ScreenController
 @onready var SETTING_SCREEN = $SettingsScreen
 @onready var PROGRESS_SCREEN = $ProgressScreen
 @onready var STICKER_POPUP_SCREEN = $StickerPopUpScreen
+@onready var INFO_SCREEN = $InfoScreen
+@onready var INFO_SCREEN_TEXT = $InfoScreen/InfoScreenTexture/InformationLabel
 # Variables
 var level_number = ""
 var current_screen = null
@@ -62,21 +64,22 @@ func _on_button_pressed(button):
 				TextToSpeech.speak_text("You're already logged in!")
 				PARENT_LOGIN_SCREEN.open_screens()
 		"ProgressButton":
-			PROGRESS_SCREEN.editing = editing
-			PROGRESS_SCREEN.visible = true
+			change_popup_screen("Progress", PROGRESS_SCREEN, true)
 		"ProgressBackButton":
-			TextToSpeech.speak_text("Spark Tales. Stories. Progress. Parents")
-			PROGRESS_SCREEN.visible = false
+			change_popup_screen("Spark Tales. Stories. Progress. Parents", PROGRESS_SCREEN, false)
 		"SettingButton":
-			TextToSpeech.speak_text("Settings. Music Volume. Sound Volume. Text Size. Text To Speech.")
-			SoundFx.play("click")
-			SETTING_SCREEN.visible = true
+			change_popup_screen("Settings. Music Volume. Sound Volume. Text Size. Text To Speech.", SETTING_SCREEN, true)
 		"SettingBackButton":
-			TextToSpeech.speak_text("Spark Tales. Stories. Progress. Parents")
-			SoundFx.play("click")
-			SETTING_SCREEN.visible = false
+			change_popup_screen("Spark Tales. Stories. Progress. Parents", SETTING_SCREEN, false)
+		"InformationButton":
+			change_popup_screen(INFO_SCREEN_TEXT.text, INFO_SCREEN, true)
+		"InformationBackButton":
+			change_popup_screen("Spark Tales. Stories. Progress. Parents", INFO_SCREEN, false)
 
-
+func change_popup_screen(text_to_speak, screen_to_change, visibillity):
+	TextToSpeech.speak_text(text_to_speak)
+	SoundFx.play("click")
+	screen_to_change.visible = visibillity
 func _on_level_reset():
 		change_screen(STORIES_SCREEN)
 		
