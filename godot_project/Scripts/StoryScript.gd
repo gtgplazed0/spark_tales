@@ -13,6 +13,7 @@ var text_edit: TextEdit
 var self_path
 var save_edit_button
 var text_size
+var next_or_finished_button
 signal answer(correct_or_incorrect)
 signal next_clicked
 signal return_clicked
@@ -20,10 +21,10 @@ signal previous_clicked
 signal finished_clicked(editing)
 signal image_clicked
 func _ready():
+	button_set_up()
 	await page_setup()
 	set_process_unhandled_input(true)
 	print(name)
-	button_set_up()
 	if page_text != null:
 			TextToSpeech.speak_text(get_text_content())
 	get_image_content()
@@ -33,12 +34,14 @@ func button_set_up():
 		if child.is_in_group("buttons"):
 			match child.name:
 				"Next":
+					next_or_finished_button = child
 					child.clicked.connect(_on_next_clicked)
 				"Return":
 					child.clicked.connect(_on_return_clicked)
 				"Previous":
 					child.clicked.connect(_on_previous_clicked)
 				"FinishStory":
+					next_or_finished_button = child
 					child.clicked.connect(_on_finished_clicked)
 				"YesButton", "NoButton":
 					child.clicked.connect(_on_yes_or_no)
@@ -89,6 +92,8 @@ func page_setup():
 			"SaveEditButton":
 				save_edit_button = child
 				save_edit_button.visible = false
+				save_edit_button.position = next_or_finished_button.position
+				save_edit_button.size = next_or_finished_button.size
 	story_num = get_story_num()
 	if int(user_id)  == 1:
 		print("The user id is being setup as guest: " + str(user_id))
@@ -172,6 +177,7 @@ func show_text_edit():
 func editing_setup():
 	if editing:
 		save_edit_button.visible = true
+		next_or_finished_button.visible = false
 		
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -216,3 +222,4 @@ func _on_page_text_edit_button_pressed() -> void:
 func _on_save_edit_button_pressed() -> void:
 	editing_takedown()
 	save_page()
+	next_clicked.emit()

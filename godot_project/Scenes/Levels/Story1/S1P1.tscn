@@ -121,20 +121,19 @@ stretch_mode = 4
 metadata/_edit_use_anchors_ = true
 
 [node name="SaveEditButton" type="TextureButton" parent="."]
-visible = false
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 18.0
-offset_top = -132.0
-offset_right = 189.0
-offset_bottom = -17.0
+anchors_preset = -1
+anchor_left = 0.0152542
+anchor_top = 0.837037
+anchor_right = 0.160169
+anchor_bottom = 0.979012
+offset_bottom = -1.97887e-05
 grow_vertical = 0
 texture_normal = ExtResource("9_kqnmd")
 texture_pressed = ExtResource("10_idusf")
 ignore_texture_size = true
 stretch_mode = 4
+metadata/_edit_use_anchors_ = true
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="PageText/PageTextEditButton" to="." method="_on_page_text_edit_button_pressed"]

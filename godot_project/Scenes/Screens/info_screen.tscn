@@ -15,6 +15,7 @@ outline_color = Color(0, 0, 0, 1)
 font_size = 110
 
 [sub_resource type="SystemFont" id="SystemFont_pv3sa"]
+subpixel_positioning = 0
 
 [node name="InfoScreen" type="Control"]
 layout_mode = 3
@@ -25,7 +26,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xk4qf")
 
-[node name="InfoScreenBG2" type="ColorRect" parent="."]
+[node name="InfoScreenBG" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,57 +35,58 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.65098, 0.792157, 1, 0.623529)
 
-[node name="InfoScreenTexture2" type="TextureRect" parent="."]
+[node name="InfoScreenTexture" type="TextureRect" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -531.5
-offset_top = -366.0
-offset_right = 531.5
-offset_bottom = 366.0
+anchors_preset = -1
+anchor_left = 0.0495763
+anchor_top = 0.0481481
+anchor_right = 0.950424
+anchor_bottom = 0.951852
+offset_right = 1.33514e-05
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_7vblw")
 expand_mode = 1
 stretch_mode = 4
+metadata/_edit_use_anchors_ = true
 
-[node name="InfoScreenLabel" type="Label" parent="InfoScreenTexture2"]
+[node name="InfoScreenLabel" type="Label" parent="InfoScreenTexture"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -424.0
-offset_top = -6.0
-offset_right = 425.0
-offset_bottom = 159.0
+anchors_preset = -1
+anchor_left = 0.101129
+anchor_top = -0.00819672
+anchor_right = 0.899812
+anchor_bottom = 0.217213
+offset_right = -1.13249e-05
 grow_horizontal = 2
 text = "INFORMATION"
 label_settings = SubResource("LabelSettings_42lj4")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="InfoScreenLabel" type="Label" parent="InfoScreenTexture2/InfoScreenLabel"]
+[node name="InfoScreenLabel" type="Label" parent="InfoScreenTexture/InfoScreenLabel"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -282.5
-offset_top = -7.0
-offset_right = 270.5
-offset_bottom = 161.0
+anchors_preset = -1
+anchor_left = 0.0335689
+anchor_top = -0.0424242
+anchor_right = 0.952297
+anchor_bottom = 0.975758
+offset_left = 113.5
+offset_right = -113.5
 grow_horizontal = 2
 text = "INFORMATION"
 label_settings = SubResource("LabelSettings_rm03x")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="InformationLabel" type="RichTextLabel" parent="InfoScreenTexture2"]
+[node name="InformationLabel" type="RichTextLabel" parent="InfoScreenTexture"]
 layout_mode = 0
-offset_left = 34.0
-offset_top = 128.0
-offset_right = 1031.0
-offset_bottom = 674.0
+anchor_left = 0.0319849
+anchor_top = 0.174863
+anchor_right = 0.969896
+anchor_bottom = 0.920765
+offset_right = 2.54512e-05
+offset_bottom = -1.09673e-05
 theme_override_colors/default_color = Color(0.991164, 0.991164, 0.991164, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -126,12 +128,18 @@ Loggin in to an account (your own, or guest), will allow you to access the \"edi
 
 There you have it. Everything you need to know! Have fun!
 "
+metadata/_edit_use_anchors_ = true
 
-[node name="InformationBackButton2" parent="." instance=ExtResource("2_u54gw")]
-offset_left = 78.0
-offset_top = 64.0
-offset_right = 166.0
-offset_bottom = 152.0
+[node name="InformationBackButton" parent="." instance=ExtResource("2_u54gw")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0661017
+anchor_top = 0.0790123
+anchor_right = 0.140678
+anchor_bottom = 0.187654
+offset_right = 8.70228e-06
+offset_bottom = 3.69549e-06
 texture_normal = ExtResource("3_pjrf0")
 ignore_texture_size = true
 stretch_mode = 0
+metadata/_edit_use_anchors_ = true

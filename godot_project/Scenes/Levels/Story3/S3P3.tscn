@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://8inpecwjakfl"]
+[gd_scene load_steps=22 format=3 uid="uid://8inpecwjakfl"]
 
 [ext_resource type="Texture2D" uid="uid://ch265xp226peu" path="res://Assets/images/Story Images/PaperBackground.png" id="1_8hgcl"]
 [ext_resource type="Script" path="res://Scripts/StoryScript.gd" id="1_u24dv"]
@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://c3b0gqcle7bdy" path="res://Scenes/Buttons/yes_button.tscn" id="11_5x2ko"]
 [ext_resource type="PackedScene" uid="uid://dh0jqresmn1yn" path="res://Scenes/Buttons/no_button.tscn" id="12_kmko3"]
 [ext_resource type="Texture2D" uid="uid://bvesj6vgcs4vs" path="res://Assets/Textures/SettingsBackground.png" id="13_vh3wo"]
+[ext_resource type="Texture2D" uid="uid://b34t04rd7sw13" path="res://Assets/Textures/Buttons/SaveEditButton.png" id="14_ppeik"]
+[ext_resource type="Texture2D" uid="uid://b4blhncroo4fj" path="res://Assets/Textures/Buttons/SaveEditButtonPressed.png" id="15_2o143"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_noxkb"]
 font = ExtResource("3_w08to")
@@ -99,6 +101,14 @@ texture = ExtResource("3_12ec6")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="PageImageEditButton" type="TextureButton" parent="PageImage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="PageText" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -116,6 +126,14 @@ text = "Jimmy's teacher tells the class to remain calm. It's only a fire drill! 
 "
 label_settings = SubResource("LabelSettings_noxkb")
 autowrap_mode = 3
+
+[node name="PageTextEditButton" type="TextureButton" parent="PageText"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Next" parent="." instance=ExtResource("4_84ftv")]
 layout_mode = 1
@@ -279,5 +297,23 @@ libraries = {
 "": SubResource("AnimationLibrary_o823t")
 }
 
+[node name="SaveEditButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0152542
+anchor_top = 0.837037
+anchor_right = 0.160169
+anchor_bottom = 0.979012
+offset_bottom = -1.97887e-05
+grow_vertical = 0
+texture_normal = ExtResource("14_ppeik")
+texture_pressed = ExtResource("15_2o143")
+ignore_texture_size = true
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="pressed" from="PageImage/PageImageEditButton" to="." method="_on_page_image_edit_button_pressed"]
+[connection signal="pressed" from="PageText/PageTextEditButton" to="." method="_on_page_text_edit_button_pressed"]
 [connection signal="gui_input" from="Popup" to="." method="_on_popup_gui_input"]
+[connection signal="pressed" from="SaveEditButton" to="." method="_on_save_edit_button_pressed"]

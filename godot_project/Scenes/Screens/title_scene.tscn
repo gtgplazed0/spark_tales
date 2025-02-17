@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cn7megd1d1rew"]
+[gd_scene load_steps=15 format=3 uid="uid://cn7megd1d1rew"]
 
 [ext_resource type="Script" path="res://Scripts/Screens/base_screens.gd" id="1_twy58"]
 [ext_resource type="Texture2D" uid="uid://pcsirxxdynow" path="res://Assets/Textures/Logo.png" id="2_d0oy0"]
@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://dkicoroo4ghj7" path="res://Assets/Textures/Buttons/TitleScreenButtons/ParentBTNPressed.png" id="10_0fj4m"]
 [ext_resource type="Texture2D" uid="uid://h5f62b4yf7a8" path="res://Assets/Textures/Buttons/TitleScreenButtons/SettingsBTN.png" id="11_1qw6i"]
 [ext_resource type="Texture2D" uid="uid://xeh1l2t6dl7q" path="res://Assets/Textures/Buttons/TitleScreenButtons/SettingsBTNPressed.png" id="12_4rfpi"]
+[ext_resource type="Texture2D" uid="uid://bod6grcg4r30r" path="res://Assets/Textures/Buttons/TitleScreenButtons/InformationButton.png" id="13_sa5ru"]
+[ext_resource type="Texture2D" uid="uid://djhfq7xnqy26" path="res://Assets/Textures/Buttons/TitleScreenButtons/InformationButtonPressed.png" id="14_dpvqp"]
 
 [node name="TitleScene" type="Control"]
 layout_mode = 3
@@ -110,11 +112,15 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="InformationButton" parent="." instance=ExtResource("2_xujux")]
-offset_left = 1079.0
-offset_top = 7.0
-offset_right = 1174.0
-offset_bottom = 102.0
-texture_normal = ExtResource("11_1qw6i")
-texture_pressed = ExtResource("12_4rfpi")
+layout_mode = 0
+anchor_left = 0.914407
+anchor_top = 0.00864198
+anchor_right = 0.994915
+anchor_bottom = 0.125926
+offset_right = 8.58307e-06
+offset_bottom = -1.96695e-06
+texture_normal = ExtResource("13_sa5ru")
+texture_pressed = ExtResource("14_dpvqp")
 ignore_texture_size = true
 stretch_mode = 0
+metadata/_edit_use_anchors_ = true

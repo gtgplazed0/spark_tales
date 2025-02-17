@@ -50,4 +50,5 @@ visible = false
 layout_mode = 1
 
 [node name="InfoScreen" parent="." instance=ExtResource("9_0he0h")]
+visible = false
 layout_mode = 1
